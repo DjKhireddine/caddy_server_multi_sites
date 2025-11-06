@@ -1,5 +1,5 @@
 # Configuration Caddy - Générée dynamiquement
-:{$CADDY_HTTP_PORT} {
+{
     # Services PHP
     @html host html.{$DOMAIN}
     handle @html {
@@ -66,4 +66,3 @@
         file_server
     }
 }
-
