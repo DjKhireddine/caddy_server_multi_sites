@@ -1,0 +1,23 @@
+services:
+  go-app:
+    image: golang:1.25-alpine
+    container_name: go-librairie-app
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      - PORT=3000
+    command: |
+      sh -c "
+        cd /app &&
+        go mod download &&
+        go build -o main . &&
+        ./main
+      "
+    networks:
+      - caddy_network
+
+networks:
+  caddy_network:
+    external: true 

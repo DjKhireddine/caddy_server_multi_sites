@@ -1,0 +1,113 @@
+# Environment files (keep only example)
+.env
+!.env.example
+
+# Docker volumes and data
+caddy_data/
+caddy_config/
+db_data/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ========== DEPENDENCIES ==========
+
+# PHP (Laravel/Symfony)
+vendor/
+composer.lock
+# Laravel specific
+bootstrap/cache/
+storage/framework/cache/
+storage/framework/views/
+storage/logs/
+.env.backup
+.phpunit.result.cache
+# Symfony specific
+var/cache/
+var/logs/
+var/sessions/
+
+# Python (Django)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.hypothesis/
+.pytest_cache/
+# Django
+*.sqlite3
+media/
+staticfiles/
+
+# Node.js (if any WordPress themes/plugins)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.webpack/
+.parcel-cache/
+
+# Go
+go/pkg/
+go/bin/
+*.exe
+*.test
+*.out
+
+# ========== FRAMEWORK SPECIFIC ==========
+
+# WordPress (if in sites/PHP/wordpress)
+sites/PHP/wordpress/wp-content/uploads/
+sites/PHP/wordpress/wp-content/cache/
+sites/PHP/wordpress/wp-content/upgrade/
+sites/PHP/wordpress/wp-content/backups/
+sites/PHP/wordpress/.htaccess
+
+# Laravel
+sites/PHP/laravel/storage/*.key
+sites/PHP/laravel/public/storage
+sites/PHP/laravel/public/hot
+
+# Symfony
+sites/PHP/symfony/var/
+sites/PHP/symfony/public/bundles/
+
+# ========== BUILD/COMPILED FILES ==========
+dist/
+build/
+*.tar.gz
+*.zip
+
+# ========== BACKUP FILES ==========
+*.backup
+*.bak
+*.old
+*.tmp
+
+# ========== DATABASE ==========
+*.db
+*.sql
+*.sqlite
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ Test DigitalOcean Réussi</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+	    background: #1e4854;
+	    margin: 0;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(255,255,255,0.05);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        .ip-address {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            margin: 20px 0;
+            border: 2px solid #4CAF50;
+        }
+        P.status {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .info {
+            text-align: left;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 SUCCÈS !</h1>
+        <div class="status">✅ SERVEUR ACTIF</div>
+        
+        <div class="ip-address">
+            🌐 https://html.domozone.com
+        </div>
+        
+        <div class="info">
+            <h3>📊 Informations :</h3>
+            <p><strong>📍 IP :</strong> <span id="ip"></span></p>
+            <p><strong>📅 Date :</strong> <span id="date"></span></p>
+            <p><strong>⏰ Heure :</strong> <span id="time"></span></p>
+            <p><strong>🖥️ Utilisateur :</strong> djamel</p>
+        </div>
+        
+    </div>
+
+    <script>
+        // Afficher les informations dynamiques
+        document.getElementById('ip').textContent = window.location.hostname;
+        
+        const now = new Date();
+        document.getElementById('date').textContent = now.toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+	function updateTime() {
+            const now = new Date();
+	    document.getElementById('time').textContent = now.toLocaleTimeString('fr-FR');
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+
+
+        console.log('✅ Page de test chargée avec succès');
+    </script>
+</body>
+</html>

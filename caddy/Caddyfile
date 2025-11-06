@@ -1,0 +1,69 @@
+# Configuration Caddy - Générée dynamiquement
+:{$CADDY_HTTP_PORT} {
+    # Services PHP
+    @html host html.{$DOMAIN}
+    handle @html {
+        root * {$HTML_ROOT}
+        php_fastcgi php:{$PHP_INTERNAL_PORT}
+        file_server
+    }
+
+    @php host php.{$DOMAIN}
+    handle @php {
+        root * {$PHP_SIMPLE_ROOT}
+        php_fastcgi php:{$PHP_INTERNAL_PORT}
+        file_server
+    }
+
+    @landing host landing.{$DOMAIN}
+    handle @landing {
+        root * {$LANDING_ROOT}
+        php_fastcgi php:{$PHP_INTERNAL_PORT}
+        file_server
+    }
+
+    @laravel host laravel.{$DOMAIN}
+    handle @laravel {
+        root * {$LARAVEL_ROOT}
+        php_fastcgi php:{$PHP_INTERNAL_PORT}
+        file_server
+    }
+
+    @symfony host symfony.{$DOMAIN}
+    handle @symfony {
+        root * {$SYMFONY_ROOT}
+        php_fastcgi php:{$PHP_INTERNAL_PORT}
+        file_server
+    }
+
+    @wordpress host wordpress.{$DOMAIN}
+    handle @wordpress {
+        root * {$WORDPRESS_ROOT}
+        php_fastcgi php:{$PHP_INTERNAL_PORT}
+        file_server
+    }
+
+    # Services externes
+    @phpmyadmin host phpmyadmin.{$DOMAIN}
+    handle @phpmyadmin {
+        reverse_proxy phpmyadmin:{$PHPMYADMIN_INTERNAL_PORT}
+    }
+
+    @go host go.{$DOMAIN}
+    handle @go {
+        encode gzip
+        reverse_proxy go-app:{$GO_APP_INTERNAL_PORT}
+    }
+
+    @django host django.{$DOMAIN}
+    handle @django {
+        reverse_proxy django:{$DJANGO_INTERNAL_PORT}
+    }
+
+    # Route par défaut pour les requêtes sans host matching
+    handle {
+        root * {$HTML_ROOT}
+        file_server
+    }
+}
+

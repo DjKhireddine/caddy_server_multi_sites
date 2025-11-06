@@ -1,0 +1,22 @@
+services:
+  django:
+    build:
+      context: ../../sites/PYTHON/django
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:${DJANGO_INTERNAL_PORT:-8015}
+    env_file: 
+      - path: ../../.env
+    ports:
+      - ${DJANGO_INTERNAL_PORT:-8015}:80
+    volumes:
+      - ../../sites/PYTHON/django:/app  
+    networks:
+      - app_network
+      - db_network
+
+networks:
+  app_network:
+    external: true
+  db_network:
+    external: true
+

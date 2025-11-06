@@ -1,0 +1,13 @@
+services:
+  go-app:
+    build: 
+      context: ../../sites/GO/library
+      dockerfile: Dockerfile
+    networks:
+      - app_network
+    environment:
+      - PORT=${GO_APP_INTERNAL_PORT}
+
+networks:
+  app_network:
+    external: true
