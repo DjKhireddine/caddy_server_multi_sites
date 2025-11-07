@@ -1,68 +1,70 @@
 # Configuration Caddy - Générée dynamiquement
 {
-    # Services PHP
-    @html host html.{$DOMAIN}
-    handle @html {
-        root * {$HTML_ROOT}
-        php_fastcgi php:{$PHP_INTERNAL_PORT}
-        file_server
-    }
+    email {$ACME_EMAIL}
 
-    @php host php.{$DOMAIN}
-    handle @php {
-        root * {$PHP_SIMPLE_ROOT}
-        php_fastcgi php:{$PHP_INTERNAL_PORT}
-        file_server
-    }
-
-    @landing host landing.{$DOMAIN}
-    handle @landing {
-        root * {$LANDING_ROOT}
-        php_fastcgi php:{$PHP_INTERNAL_PORT}
-        file_server
-    }
-
-    @laravel host laravel.{$DOMAIN}
-    handle @laravel {
-        root * {$LARAVEL_ROOT}
-        php_fastcgi php:{$PHP_INTERNAL_PORT}
-        file_server
-    }
-
-    @symfony host symfony.{$DOMAIN}
-    handle @symfony {
-        root * {$SYMFONY_ROOT}
-        php_fastcgi php:{$PHP_INTERNAL_PORT}
-        file_server
-    }
-
-    @wordpress host wordpress.{$DOMAIN}
-    handle @wordpress {
-        root * {$WORDPRESS_ROOT}
-        php_fastcgi php:{$PHP_INTERNAL_PORT}
-        file_server
-    }
-
-    # Services externes
-    @phpmyadmin host phpmyadmin.{$DOMAIN}
-    handle @phpmyadmin {
-        reverse_proxy phpmyadmin:{$PHPMYADMIN_INTERNAL_PORT}
-    }
-
-    @go host go.{$DOMAIN}
-    handle @go {
-        encode gzip
-        reverse_proxy go-app:{$GO_APP_INTERNAL_PORT}
-    }
-
-    @django host django.{$DOMAIN}
-    handle @django {
-        reverse_proxy django:{$DJANGO_INTERNAL_PORT}
-    }
-
-    # Route par défaut pour les requêtes sans host matching
-    handle {
-        root * {$HTML_ROOT}
-        file_server
-    }
+    # Caddy ignore la ligne si la variable n'est pas définie
+    acme_ca {$ACME_CA}
 }
+
+# --- Snippet commun pour les sites PHP ---
+(php_stack) {
+    php_fastcgi php:{$PHP_INTERNAL_PORT}
+    file_server
+}
+
+# --- Services PHP ---
+{$SUBDOMAIN_HTML}.{$DOMAIN} {
+    root * {$HTML_ROOT}
+    import php_stack
+}
+
+{$SUBDOMAIN_PHP}.{$DOMAIN} {
+    root * {$PHP_SIMPLE_ROOT}
+    import php_stack
+}
+
+{$SUBDOMAIN_LANDING}.{$DOMAIN} {
+    root * {$LANDING_ROOT}
+    import php_stack
+}
+
+{$SUBDOMAIN_LARAVEL}.{$DOMAIN} {
+    root * {$LARAVEL_ROOT}
+    import php_stack
+}
+
+{$SUBDOMAIN_SYMFONY}.{$DOMAIN} {
+    root * {$SYMFONY_ROOT}
+    import php_stack
+}
+
+{$SUBDOMAIN_WORDPRESS}.{$DOMAIN} {
+    root * {$WORDPRESS_ROOT}
+    import php_stack
+}
+
+# --- Services externes ---
+{$SUBDOMAIN_PHPMYADMIN}.{$DOMAIN} {
+    reverse_proxy phpmyadmin:{$PHPMYADMIN_INTERNAL_PORT}
+}
+
+{$SUBDOMAIN_GO}.{$DOMAIN} {
+    encode gzip
+    reverse_proxy go-app:{$GO_APP_INTERNAL_PORT}
+}
+
+{$SUBDOMAIN_DJANGO}.{$DOMAIN} {
+    reverse_proxy django:{$DJANGO_INTERNAL_PORT}
+}
+
+# --- Fallback : toutes les autres requêtes ---
+:443 {
+    root * {$HTML_ROOT}
+    file_server
+}
+
+:80 {
+    root * {$HTML_ROOT}
+    file_server
+}
+
