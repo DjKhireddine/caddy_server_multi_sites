@@ -1,0 +1,24 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: 1000
+        GID: 1000
+    container_name: php
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ../../sites:${PROJECTS_PATH}
+    networks:
+      - app_network
+      - db_network
+
+networks:
+  app_network:
+    external: true
+  db_network:
+    external: true
