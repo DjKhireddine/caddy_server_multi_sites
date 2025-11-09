@@ -1,7 +1,0 @@
-.git
-README.md
-*.log
-data/
-Dockerfile
-docker-compose.yml
-.dockerignore

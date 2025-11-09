@@ -1,69 +1,56 @@
-# Configuration Caddy - Générée dynamiquement
-{
-    #email {$ACME_EMAIL}
-
-    # Caddy ignore la ligne si la variable n'est pas définie
-    #acme_ca {$ACME_CA}
-}
-
-# --- Snippet commun pour les sites PHP ---
+# Snippet commun PHP (FPM)
 (php_stack) {
-    php_fastcgi php:{$PHP_INTERNAL_PORT}
-    file_server
+	php_fastcgi php:{$PHP_INTERNAL_PORT}
+	file_server
 }
 
-# --- Services PHP ---
+# ===== Racine du domaine : LANDING à la racine =====
+{$DOMAIN} {
+	root * {$LANDING_ROOT}
+	import php_stack
+}
+
+# Optionnel : www.domaine
+www.{$DOMAIN} {
+	root * {$LANDING_ROOT}
+	import php_stack
+}
+
+# ===== Sous-domaines PHP =====
 {$SUBDOMAIN_HTML}.{$DOMAIN} {
-    root * {$HTML_ROOT}
-    import php_stack
+	root * {$HTML_ROOT}
+	import php_stack
 }
 
 {$SUBDOMAIN_PHP}.{$DOMAIN} {
-    root * {$PHP_SIMPLE_ROOT}
-    import php_stack
-}
-
-{$SUBDOMAIN_LANDING}.{$DOMAIN} {
-    root * {$LANDING_ROOT}
-    import php_stack
+	root * {$PHP_SIMPLE_ROOT}
+	import php_stack
 }
 
 {$SUBDOMAIN_LARAVEL}.{$DOMAIN} {
-    root * {$LARAVEL_ROOT}
-    import php_stack
+	root * {$LARAVEL_ROOT}
+	import php_stack
 }
 
 {$SUBDOMAIN_SYMFONY}.{$DOMAIN} {
-    root * {$SYMFONY_ROOT}
-    import php_stack
+	root * {$SYMFONY_ROOT}
+	import php_stack
 }
 
 {$SUBDOMAIN_WORDPRESS}.{$DOMAIN} {
-    root * {$WORDPRESS_ROOT}
-    import php_stack
+	root * {$WORDPRESS_ROOT}
+	import php_stack
 }
 
-# --- Services externes ---
+# ===== Services externes =====
 {$SUBDOMAIN_PHPMYADMIN}.{$DOMAIN} {
-    reverse_proxy phpmyadmin:{$PHPMYADMIN_INTERNAL_PORT}
+	reverse_proxy phpmyadmin:80
 }
 
 {$SUBDOMAIN_GO}.{$DOMAIN} {
-    encode gzip
-    reverse_proxy go-app:{$GO_APP_INTERNAL_PORT}
+	reverse_proxy go-app:{$GO_APP_INTERNAL_PORT}
 }
 
 {$SUBDOMAIN_DJANGO}.{$DOMAIN} {
-    reverse_proxy django:{$DJANGO_INTERNAL_PORT}
-}
-
-# --- Fallback : toutes les autres requêtes ---
-:443 {
-    root * {$HTML_ROOT}
-    file_server
-}
-
-:80 {
-    root * {$HTML_ROOT}
-    file_server
+	reverse_proxy django:{$DJANGO_INTERNAL_PORT}
 }

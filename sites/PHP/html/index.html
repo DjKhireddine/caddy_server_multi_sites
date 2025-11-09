@@ -63,12 +63,12 @@
         <div class="status">✅ SERVEUR ACTIF</div>
         
         <div class="ip-address">
-            🌐 https://html.domozone.com
+            🌐 <span class="host"></span>
         </div>
         
         <div class="info">
             <h3>📊 Informations :</h3>
-            <p><strong>📍 IP :</strong> <span id="ip"></span></p>
+            <p><strong>📍 IP :</strong> <span class="host"></span></p>
             <p><strong>📅 Date :</strong> <span id="date"></span></p>
             <p><strong>⏰ Heure :</strong> <span id="time"></span></p>
             <p><strong>🖥️ Utilisateur :</strong> user</p>
@@ -78,7 +78,7 @@
 
     <script>
         // Afficher les informations dynamiques
-        document.getElementById('ip').textContent = window.location.hostname;
+        document.querySelectorAll('.host').forEach(hostElement => hostElement.textContent = window.location.hostname)
         
         const now = new Date();
         document.getElementById('date').textContent = now.toLocaleDateString('fr-FR', {
