@@ -464,7 +464,7 @@
                     </div>
                     <h3>Laravel</h3>
                     <p>Application PHP Laravel avec base de données MySQL</p>
-                    <a href="https://laravel.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="laravel" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
 
                 <div class="project-card">
@@ -473,7 +473,7 @@
                     </div>
                     <h3>Symfony</h3>
                     <p>Projet Symfony avec architecture MVC et fonctionnalités avancées</p>
-                    <a href="https://symfony.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="symfony" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
 
                 <div class="project-card">
@@ -482,7 +482,7 @@
                     </div>
                     <h3>Wordpress</h3>
                     <p>Un site Wordpress de base avec interface d'administration</p>
-                    <a href="https://wordpress.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="wordpress" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
 
                 <div class="project-card">
@@ -491,7 +491,7 @@
                     </div>
                     <h3>Go Project</h3>
                     <p>Application Go légère et performante avec traitement concurrentiel</p>
-                    <a href="https://go.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="go" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
 
                 <!-- Ligne 2 -->
@@ -501,7 +501,7 @@
                     </div>
                     <h3>PHP Simple</h3>
                     <p>Site PHP traditionnel avec fonctionnalités basiques</p>
-                    <a href="https://php.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="php" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
 
                 <div class="project-card">
@@ -510,7 +510,7 @@
                     </div>
                     <h3>Django</h3>
                     <p>Application Python Django avec interface d'administration et API REST</p>
-                    <a href="https://django.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="django" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
 
                 <div class="project-card">
@@ -519,7 +519,7 @@
                     </div>
                     <h3>HTML Statique</h3>
                     <p>Site web statique avec HTML5, CSS3 et JavaScript pur</p>
-                    <a href="https://html.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="html" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
 
                 <div class="project-card">
@@ -528,7 +528,7 @@
                     </div>
                     <h3>phpMyAdmin</h3>
                     <p>Interface d'administration bases de données MySQL/MariaDB</p>
-                    <a href="https://phpmyadmin.domozone.com" target="_blank" class="project-link">Visiter le Projet</a>
+                    <a data-subdomain="phpmyadmin" target="_blank" class="project-link">Visiter le Projet</a>
                 </div>
             </div>
         </div>
@@ -636,13 +636,13 @@
                 <div class="footer-column">
                     <h4>Projets</h4>
                     <ul class="footer-links">
-                        <li><a href="https://laravel.domozone.com" target="_blank">Laravel</a></li>
-                        <li><a href="https://symfony.domozone.com" target="_blank">Symfony</a></li>
-                        <li><a href="https://django.domozone.com" target="_blank">Django</a></li>
-                        <li><a href="https://go.domozone.com" target="_blank">Go Project</a></li>
-                        <li><a href="https://php.domozone.com" target="_blank">PHP Project</a></li>
-                        <li><a href="https://html.domozone.com" target="_blank">HTML Statique</a></li>
-                        <li><a href="https://phpmyadmin.domozone.com" target="_blank">phpMyAdmin</a></li>
+                        <li><a data-subdomain="laravel" target="_blank">Laravel</a></li>
+                        <li><a data-subdomain="symfony" target="_blank">Symfony</a></li>
+                        <li><a data-subdomain="django" target="_blank">Django</a></li>
+                        <li><a data-subdomain="go" target="_blank">Go Project</a></li>
+                        <li><a data-subdomain="php" target="_blank">PHP Project</a></li>
+                        <li><a data-subdomain="html" target="_blank">HTML Statique</a></li>
+                        <li><a data-subdomain="phpmyadmin" target="_blank">phpMyAdmin</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -663,13 +663,41 @@
     </footer>
 
     <script>
+        // === Script Dynamique des liens ===
+        (function() {
+            // Récupère le domaine depuis env.js si présent, sinon depuis l'URL
+            const baseDomain = (window.__ENV__ && window.__ENV__.DOMAIN) ||
+                window.location.hostname.split('.').slice(-2).join('.') ||
+                'localhost';
+
+            console.log('🌐 Domaine détecté :', baseDomain);
+
+            // Met à jour tous les liens dynamiques
+            document.querySelectorAll('[data-subdomain]').forEach(link => {
+                const sub = link.getAttribute('data-subdomain');
+                // Utilise HTTP pour localhost, HTTPS pour les autres domaines
+                const protocol = baseDomain === 'localhost' ? 'http' : 'https';
+                link.href = `${protocol}://${sub}.${baseDomain}`;
+
+                // Met à jour aussi le texte si l'élément a un span pour l'URL
+                const urlSpan = link.querySelector('.project-url');
+                if (urlSpan) {
+                    urlSpan.textContent = `${sub}.${baseDomain}`;
+                }
+            });
+        })();
+
         // Smooth scroll pour les ancres
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
 
@@ -684,16 +712,38 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    // Arrête d'observer une fois l'animation déclenchée
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
         // Observer les éléments à animer
-        document.querySelectorAll('.project-card, .arch-item, .stat-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.project-card, .arch-item, .stat-item, .feature-card');
+
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Gestion du chargement des images pour éviter les sauts de layout
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.style.opacity = '1';
+                } else {
+                    img.addEventListener('load', function() {
+                        this.style.opacity = '1';
+                    });
+                    img.style.opacity = '0';
+                    img.style.transition = 'opacity 0.3s ease';
+                }
+            });
         });
     </script>
 </body>

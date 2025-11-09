@@ -1,9 +1,9 @@
 # Configuration Caddy - Générée dynamiquement
 {
-    email {$ACME_EMAIL}
+    #email {$ACME_EMAIL}
 
     # Caddy ignore la ligne si la variable n'est pas définie
-    acme_ca {$ACME_CA}
+    #acme_ca {$ACME_CA}
 }
 
 # --- Snippet commun pour les sites PHP ---
@@ -67,4 +67,3 @@
     root * {$HTML_ROOT}
     file_server
 }
-

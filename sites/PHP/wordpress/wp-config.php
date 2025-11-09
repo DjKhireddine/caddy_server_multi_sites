@@ -1,9 +1,9 @@
 <?php
 // ** Paramètres MySQL - Variables d'environnement Docker ** //
-define('DB_NAME', 'wordpress');
-define('DB_USER', 'djamel');
-define('DB_PASSWORD', 'djamel');
-define('DB_HOST', 'mariadb');
+define('DB_NAME', getenv('DB_NAME') ?: 'wordpress');
+define('DB_USER', getenv('DB_USER') ?: 'wordpress_user');
+define('DB_PASSWORD', getenv('DB_PASSWORD') ?: 'password');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 

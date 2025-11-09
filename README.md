@@ -53,10 +53,10 @@ Configure these key variables in .env:
 DOMAIN=your_domain.dev
 
 # Database configuration
-MYSQL_ROOT_PASSWORD=your_secure_password
-MYSQL_DATABASE=laravel
-MYSQL_USER=djamel
-MYSQL_PASSWORD=your_mysql_password
+DB_HOST=mariadb
+DB_ROOT_PASSWORD=your_secure_password
+DB_USER=your_DB_USER
+DB_PASSWORD=your_DB_PASSWORD
 
 # Application paths (usually keep defaults)
 PROJECTS_PATH=/var/www
@@ -125,18 +125,18 @@ DB_HOST=db
 DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=user
-DB_PASSWORD=your_mysql_password
+DB_PASSWORD=your_DB_PASSWORD
 ```
 Symfony (.env in sites/PHP/symfony/)
 ```env
-DATABASE_URL="mysql://user:your_mysql_password@db:3306/symfony?serverVersion=8.0&charset=utf8mb4"
+DATABASE_URL="mysql://user:your_DB_PASSWORD@db:3306/symfony?serverVersion=8.0&charset=utf8mb4"
 ```
 WordPress (wp-config.php in sites/PHP/wordpress/)
 ```php
-define('DB_NAME', 'wordpress');
-define('DB_USER', 'djamel');
-define('DB_PASSWORD', 'your_mysql_password');
-define('DB_HOST', 'db');
+define('DB_NAME', getenv('DB_NAME') ?: 'wordpress');
+define('DB_USER', getenv('DB_USER') ?: 'wordpress_user');
+define('DB_PASSWORD', getenv('DB_PASSWORD') ?: 'password');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
 ```
 
 ## 🚀 Usage

@@ -17,6 +17,7 @@ services:
       - DOMAIN=${DOMAIN}
       
       # Sous-domaines
+      - SUBDOMAIN_PHPMYADMIN=${SUBDOMAIN_PHPMYADMIN}
       - SUBDOMAIN_LARAVEL=${SUBDOMAIN_LARAVEL}
       - SUBDOMAIN_SYMFONY=${SUBDOMAIN_SYMFONY}
       - SUBDOMAIN_WORDPRESS=${SUBDOMAIN_WORDPRESS}
@@ -44,18 +45,6 @@ services:
     networks:
       - app_network
 
-  php:
-    build:
-      args:
-        UID: 1000
-        GID: 1000
-    container_name: php
-    volumes:
-      - ../sites:${PROJECTS_PATH}
-    networks:
-      - app_network
-      - db_network
-
 networks:
   app_network:
     name: app_network 
@@ -63,4 +52,3 @@ networks:
   db_network:
     name: db_network
     driver: bridge
-
