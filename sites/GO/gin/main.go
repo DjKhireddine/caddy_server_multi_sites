@@ -52,7 +52,7 @@ func main() {
 
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", PageData{
-			PageTitle:     "Librairie en Ligne - Livres & eBooks",
+			PageTitle:     "Go Gin - Livres & eBooks",
 			FeaturedBooks: featuredBooks,
 			Categories:    []string{"Roman", "Polar", "Science-Fiction", "Fantasy", "Biographie", "Jeunesse"},
 		})
@@ -65,10 +65,11 @@ func main() {
 		})
 	})
 
-	fmt.Println("Server running on port 80")
-	err := router.Run(":80")
+	err := router.Run(":" + os.Getenv("GO_INTERNAL_PORT"))
 	if err != nil {
 		fmt.Printf("Error starting server: %s\n", err)
 		return
 	}
+
+	fmt.Println("Server running on port " + os.Getenv("GO_INTERNAL_PORT"))
 }

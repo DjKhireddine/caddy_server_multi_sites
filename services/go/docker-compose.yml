@@ -1,12 +1,15 @@
 services:
   go-app:
+    container_name: go
     build: 
-      context: ../../sites/GO/library
+      context: ../../sites/GO/gin
       dockerfile: Dockerfile
     networks:
       - app_network
     environment:
-      - PORT=${GO_APP_INTERNAL_PORT}
+      GO_INTERNAL_PORT: ${GO_INTERNAL_PORT}
+    volumes:
+      - ../../sites/GO/gin:/app
 
 networks:
   app_network:
