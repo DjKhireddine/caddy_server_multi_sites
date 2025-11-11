@@ -5,7 +5,7 @@ services:
     working_dir: /app
     command: ["/app/bin/app"]
     environment:
-      PORT: "80"
+      PORT: ${GO_INTERNAL_PORT}
     volumes:
       - ../../sites/GO/gin:/app:ro
     networks:
