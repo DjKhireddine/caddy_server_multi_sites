@@ -48,7 +48,7 @@ www.{$DOMAIN} {
 }
 
 {$SUBDOMAIN_GO}.{$DOMAIN} {
-	reverse_proxy go-app:{$GO_INTERNAL_PORT}
+	reverse_proxy go:{$GO_INTERNAL_PORT}
 }
 
 {$SUBDOMAIN_DJANGO}.{$DOMAIN} {

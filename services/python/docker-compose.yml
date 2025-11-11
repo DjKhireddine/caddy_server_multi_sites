@@ -9,7 +9,7 @@ services:
       - ../../sites/PYTHON/django:/app
     ports:
       - ${DJANGO_INTERNAL_PORT}:80
-    environment:
+    enviq
       DEBUG: True
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}

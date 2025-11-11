@@ -65,11 +65,11 @@ func main() {
 		})
 	})
 
-	err := router.Run(":" + os.Getenv("GO_INTERNAL_PORT"))
+	err := router.Run(":3000")
 	if err != nil {
 		fmt.Printf("Error starting server: %s\n", err)
 		return
 	}
 
-	fmt.Println("Server running on port " + os.Getenv("GO_INTERNAL_PORT"))
+	fmt.Println("Server running on port 3000")
 }

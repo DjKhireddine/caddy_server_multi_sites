@@ -44,6 +44,10 @@ help:
 	$(PRINT) "  make clean        - Nettoie tout (containers, volumes, networks)\n"
 	$(PRINT) "  make rebuild      - Rebuild et redémarre tous les services\n"
 
+ensure-networks:
+	@docker network inspect app_network >/dev/null 2>&1 || docker network create app_network
+	@docker network inspect db_network  >/dev/null 2>&1 || docker network create db_network
+
 init:
 	$(PRINT) "$(BLUE)Initialisation de l'environnement...$(NC)\n"
 	if [ ! -f .env ]; then \
@@ -52,7 +56,7 @@ init:
 	$(PRINT) "$(GREEN)✅ Environnement initialisé$(NC)\n"
 	$(PRINT) "$(YELLOW)N'oubliez pas de configurer votre fichier .env$(NC)\n\n"
 
-start: start-db start-php  start-go start-django start-caddy
+start: ensure-networks start-db start-php  start-go start-django start-caddy
 	$(PRINT) "$(GREEN)✅ Tous les services sont démarrés$(NC)\n\n"
 
 stop: stop-caddy stop-php stop-db stop-go stop-django
@@ -75,12 +79,12 @@ status:
 	$(DOCKER_COMPOSE_PYTHON) ps 2>/dev/null || echo "Non démarré"
 	$(PRINT) "\n"
 
-start-caddy:
+start-caddy: ensure-networks
 	$(PRINT) "$(GREEN)Démarrage de Caddy...$(NC)\n"
 	$(DOCKER_COMPOSE) up -d
 	$(PRINT) "$(GREEN)✅ Caddy démarré$(NC)\n"
 
-start-php:
+start-php: ensure-networks
 	$(PRINT) "$(GREEN)Démarrage de PHP...$(NC)\n"
 	$(DOCKER_COMPOSE_PHP) up -d
 	$(PRINT) "$(GREEN)✅ PHP démarré$(NC)\n"
@@ -98,7 +102,7 @@ start-php:
 	fi
 	$(PRINT) "\n"
 
-start-go:
+start-go: ensure-networks
 	$(PRINT) "$(GREEN)Démarrage du service Go...$(NC)\n"
 	$(DOCKER_COMPOSE_GO) up -d
 	$(PRINT) "$(GREEN)✅ Service Go démarré$(NC)\n"
@@ -110,7 +114,7 @@ start-go:
 	fi
 	$(PRINT) "\n"
 
-start-django:
+start-django: ensure-networks
 	$(PRINT) "$(GREEN)Démarrage du service Django...$(NC)\n"
 	$(DOCKER_COMPOSE_PYTHON) up -d
 	$(PRINT) "$(GREEN)✅ Service Django démarré$(NC)\n"
@@ -122,7 +126,7 @@ start-django:
 	fi
 	$(PRINT) "\n"
 
-start-db:
+start-db: ensure-networks
 	$(PRINT) "$(GREEN)Démarrage de la base de données...$(NC)\n"
 	$(DOCKER_COMPOSE_DATABASE) up -d
 	$(PRINT) "$(GREEN)✅ Base de données démarrée$(NC)\n"

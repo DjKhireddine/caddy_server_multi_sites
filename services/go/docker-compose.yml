@@ -1,15 +1,17 @@
 services:
-  go-app:
+  go:
+    image: alpine:3.20
     container_name: go
-    build: 
-      context: ../../sites/GO/gin
-      dockerfile: Dockerfile
-    networks:
-      - app_network
+    working_dir: /app
+    command: ["/app/bin/app"]
     environment:
-      GO_INTERNAL_PORT: ${GO_INTERNAL_PORT}
+      PORT: "80"
     volumes:
-      - ../../sites/GO/gin:/app
+      - ../../sites/GO/gin:/app:ro
+    networks:
+      app_network:
+        aliases: ["go"]
+    restart: unless-stopped
 
 networks:
   app_network:
