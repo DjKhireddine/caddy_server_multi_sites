@@ -14,6 +14,7 @@ services:
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_DJANGO}
       DJANGO_URL: ${SUBDOMAIN_DJANGO}.${DOMAIN}
     networks:
       - db_network

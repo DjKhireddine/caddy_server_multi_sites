@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'DjangoDocker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'djangodb'),
+        'NAME': os.getenv('DB_NAME', 'django'),
         'USER': os.getenv('DB_USER', 'user'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
         'HOST': os.getenv('DB_HOST', 'db'),
