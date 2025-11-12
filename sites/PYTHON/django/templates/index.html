@@ -161,6 +161,8 @@
         }
 
         .endpoint {
+            display: flex;
+            align-items: center;
             background: #f8f9fa;
             padding: 15px;
             margin: 10px 0;
@@ -192,50 +194,7 @@
 
         .description {
             color: #6c757d;
-            margin-top: 10px;
-        }
-
-        .links {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #092E20;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .btn:hover {
-            background: #0A3826;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-
-        .btn.admin {
-            background: #DC3545;
-        }
-
-        .btn.admin:hover {
-            background: #C82333;
-        }
-
-        .btn.about {
-            background: #17a2b8;
-        }
-
-        .btn.about:hover {
-            background: #138496;
+            margin-left: 15px;
         }
 
         .admin-info {
@@ -300,52 +259,36 @@
         </div>
     </div>
 
-    <!-- Fonctionnalités -->
-    <div class="features">
-        <h3>⭐ Fonctionnalités incluses</h3>
-        <ul class="feature-list">
-            <li class="feature-item">
-                <span class="feature-icon">🐳</span>
-                <span class="feature-text">Conteneurisation avec Docker</span>
-            </li>
-            <li class="feature-item">
-                <span class="feature-icon">⚡</span>
-                <span class="feature-text">Serveur de développement Django</span>
-            </li>
-            <li class="feature-item">
-                <span class="feature-icon">👤</span>
-                <span class="feature-text">Superutilisateur créé automatiquement</span>
-            </li>
-            <li class="feature-item">
-                <span class="feature-icon">🛡️</span>
-                <span class="feature-text">Interface d'administration sécurisée</span>
-            </li>
-        </ul>
-    </div>
-
     <!-- Endpoints disponibles -->
     <div class="endpoints">
         <h3>📡 Endpoints disponibles</h3>
         <div class="endpoint">
-            <a href="/health" class="method">GET</a>
-            <span class="path">/health</span>
-            <div class="description">
-                📊 Vérifie le statut de l'API et retourne l'heure du serveur
+            <div>
+                <a href="/health" class="method">GET</a>
+                <span class="path">/health</span>
             </div>
+            <span class="description">
+                📊 Vérifie le statut de l'API et retourne l'heure du serveur
+            </span>
         </div>
         <div class="endpoint">
-            <a href="/admin" class="method">GET</a>
-            <span class="path">/admin</span>
-            <div class="description">
-                ⚙️ Administration Django
+            <div>
+                <a href="/api/hello" class="method">GET</a>
+                <span class="path">/api/hello</span>
             </div>
+            <span class="description">
+                👋 Message de bienvenue de l'API
+            </span>
         </div>
-    </div>
-
-    <!-- Liens vers les routes -->
-    <div class="links">
-        <a href="/admin" class="btn admin">⚙️ Administration Django</a>
-        <a href="/apropos" class="btn about">📖 À propos</a>
+        <div class="endpoint">
+            <div>
+                <a href="/admin" class="method">GET</a>
+                <span class="path">/admin</span>
+            </div>
+            <span class="description">
+                ⚙️ Administration Django
+            </span>
+        </div>
     </div>
 
     <!-- Informations admin -->
