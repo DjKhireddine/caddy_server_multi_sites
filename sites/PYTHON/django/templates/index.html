@@ -1,62 +1,364 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Projet Django Dockerisé</title>
+    <title>Django API</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f7d44c 0%, #3571a3 50%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
         .container {
             background: white;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 680px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo .python {
+            height: 90px;
+            width: auto;
+        }
+
+        .logo .django {
+            height: 60px;
+            width: auto;
+        }
+
+        .title-section h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack {
+            background: #f8f9fa;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 30px 0;
+            border-left: 4px solid #092E20;
         }
-        h1 {
-            color: #2c3e50;
+
+        .tech-stack h3 {
+            color: #333;
+            margin-bottom: 15px;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #3498db;
+
+        .tech-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #092E20;
             color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 5px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
         }
+
+        .badge.python {
+            background: #3776AB;
+        }
+
+        .badge.django {
+            background: #092E20;
+        }
+
+        .badge.rest {
+            background: #667eea;
+        }
+
+        .features {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .features h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 0px 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-item:hover {
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            font-size: 1.5em;
+            width: 40px;
+            text-align: center;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .endpoints {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .endpoints h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            transition: transform 0.2s ease;
+        }
+
+        .endpoint:hover {
+            transform: translateX(5px);
+        }
+
+        .method {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .description {
+            color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #092E20;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: #0A3826;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn.admin {
+            background: #DC3545;
+        }
+
+        .btn.admin:hover {
+            background: #C82333;
+        }
+
+        .btn.about {
+            background: #17a2b8;
+        }
+
+        .btn.about:hover {
+            background: #138496;
+        }
+
+        .admin-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #DC3545;
+        }
+
+        .admin-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .credentials {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .credential-item {
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+
+        .credential-item strong {
+            color: #092E20;
+        }
+
         .success {
-            color: #27ae60;
+            color: #28a745;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>🚀 Bienvenue sur mon site Django !</h1>
-    <p class="success">✅ Votre environnement Docker fonctionne !</p>
+    <!-- En-tête avec logo -->
+    <div class="header">
+        <div class="logo">
+            <img class="python" src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg" alt="Python Logo">
+            <img class="django" src="https://static.djangoproject.com/img/logos/django-logo-positive.svg" alt="Django Logo">
+        </div>
+        <div class="title-section">
+            <h1>Django API</h1>
+            <p class="subtitle">Framework web Python (Docker + Caddy server)</p>
+            <p class="success">✅ Serveur Django en cours d'exécution !</p>
+        </div>
+    </div>
+    <!-- Stack technologique -->
+    <div class="tech-stack">
+        <h3>🚀 Technologies utilisées</h3>
+        <div class="tech-badges">
+            <span class="badge python">Python</span>
+            <span class="badge django">Django</span>
+            <span class="badge rest">REST API</span>
+        </div>
+    </div>
 
-    <h2>Fonctionnalités incluses :</h2>
-    <ul>
-        <li>🐳 Conteneurisation avec Docker</li>
-        <li>🗄️ Base de données PostgreSQL</li>
-        <li>⚡ Serveur de développement Django</li>
-        <li>👤 Superutilisateur créé automatiquement</li>
-    </ul>
+    <!-- Fonctionnalités -->
+    <div class="features">
+        <h3>⭐ Fonctionnalités incluses</h3>
+        <ul class="feature-list">
+            <li class="feature-item">
+                <span class="feature-icon">🐳</span>
+                <span class="feature-text">Conteneurisation avec Docker</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">⚡</span>
+                <span class="feature-text">Serveur de développement Django</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">👤</span>
+                <span class="feature-text">Superutilisateur créé automatiquement</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-icon">🛡️</span>
+                <span class="feature-text">Interface d'administration sécurisée</span>
+            </li>
+        </ul>
+    </div>
 
-    <h2>Accès rapide :</h2>
-    <a href="/admin" class="btn">Administration Django</a>
-    <a href="/apropos" class="btn">À propos</a>
+    <!-- Endpoints disponibles -->
+    <div class="endpoints">
+        <h3>📡 Endpoints disponibles</h3>
+        <div class="endpoint">
+            <a href="/health" class="method">GET</a>
+            <span class="path">/health</span>
+            <div class="description">
+                📊 Vérifie le statut de l'API et retourne l'heure du serveur
+            </div>
+        </div>
+        <div class="endpoint">
+            <a href="/admin" class="method">GET</a>
+            <span class="path">/admin</span>
+            <div class="description">
+                ⚙️ Administration Django
+            </div>
+        </div>
+    </div>
 
-    <div style="margin-top: 30px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
-        <h3>Informations de connexion admin :</h3>
-        <p><strong>Identifiant :</strong> admin</p>
-        <p><strong>Mot de passe :</strong> adminpass</p>
+    <!-- Liens vers les routes -->
+    <div class="links">
+        <a href="/admin" class="btn admin">⚙️ Administration Django</a>
+        <a href="/apropos" class="btn about">📖 À propos</a>
+    </div>
+
+    <!-- Informations admin -->
+    <div class="admin-info">
+        <h3>🔐 Informations de connexion admin</h3>
+        <div class="credentials">
+            <div class="credential-item">
+                <strong>Identifiant :</strong> admin
+            </div>
+            <div class="credential-item">
+                <strong>Mot de passe :</strong> adminpass
+            </div>
+        </div>
     </div>
 </div>
 </body>
