@@ -7,6 +7,7 @@ DOCKER_COMPOSE = docker compose --env-file .env -f caddy/docker-compose.yml
 DOCKER_COMPOSE_PHP = docker compose --env-file .env -f services/php/docker-compose.yml
 DOCKER_COMPOSE_GO = docker compose --env-file .env -f services/go/docker-compose.yml
 DOCKER_COMPOSE_PYTHON = docker compose --env-file .env -f services/python/docker-compose.yml
+DOCKER_COMPOSE_NODE = docker compose --env-file .env -f services/node/docker-compose.yml
 DOCKER_COMPOSE_DATABASE = docker compose --env-file .env -f services/database/docker-compose.yml
 
 # Couleurs
@@ -56,10 +57,10 @@ init:
 	$(PRINT) "$(GREEN)✅ Environnement initialisé$(NC)\n"
 	$(PRINT) "$(YELLOW)N'oubliez pas de configurer votre fichier .env$(NC)\n\n"
 
-start: ensure-networks start-db start-php  start-go start-django start-caddy
+start: ensure-networks start-db start-php  start-go start-django start-node start-caddy
 	$(PRINT) "$(GREEN)✅ Tous les services sont démarrés$(NC)\n\n"
 
-stop: stop-caddy stop-php stop-db stop-go stop-django
+stop: stop-caddy stop-php stop-db stop-go stop-django stop-node
 	$(PRINT) "$(YELLOW)🛑 Tous les services sont arrêtés$(NC)\n\n"
 
 restart: stop start
@@ -76,6 +77,8 @@ status:
 	$(PRINT) "\n$(YELLOW)Go:$(NC)\n"
 	$(DOCKER_COMPOSE_GO) ps 2>/dev/null || echo "Non démarré"
 	$(PRINT) "\n$(YELLOW)Django:$(NC)\n"
+	$(DOCKER_COMPOSE_NODE) ps 2>/dev/null || echo "Non démarré"
+	$(PRINT) "\n$(YELLOW)Node:$(NC)\n"
 	$(DOCKER_COMPOSE_PYTHON) ps 2>/dev/null || echo "Non démarré"
 	$(PRINT) "\n"
 
@@ -126,6 +129,16 @@ start-django: ensure-networks
 	fi
 	$(PRINT) "\n"
 
+start-node:
+	$(PRINT) "$(GREEN)Démarrage du service Node...$(NC)\n"
+	$(DOCKER_COMPOSE_NODE) up -d
+	$(PRINT) "$(GREEN)✅ Service Node démarré$(NC)\n"
+	@if [ -f .env ]; then \
+		. .env; echo "Disponible sur: $$SUBDOMAIN_NODE.$$DOMAIN"; \
+	fi
+	$(PRINT) "\n"
+
+
 start-db: ensure-networks
 	$(PRINT) "$(GREEN)Démarrage de la base de données...$(NC)\n"
 	$(DOCKER_COMPOSE_DATABASE) up -d
@@ -154,6 +167,10 @@ stop-django:
 	$(PRINT) "$(YELLOW)Arrêt du service Django...$(NC)\n"
 	$(DOCKER_COMPOSE_PYTHON) down
 
+stop-node:
+	$(PRINT) "$(YELLOW)Arrêt du service Node...$(NC)\n"
+	$(DOCKER_COMPOSE_NODE) down
+
 stop-db:
 	$(PRINT) "$(YELLOW)Arrêt de la base de données...$(NC)\n"
 	$(DOCKER_COMPOSE_DATABASE) down
@@ -164,6 +181,8 @@ clean:
 	-$(DOCKER_COMPOSE_PHP) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_GO) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_PYTHON) down -v --remove-orphans 2>/dev/null
+	-$(DOCKER_COMPOSE_DJANGO) down -v --remove-orphans 2>/dev/null
+	-$(DOCKER_COMPOSE_NODE) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_DATABASE) down -v --remove-orphans 2>/dev/null
 	$(PRINT) "$(GREEN)✅ Nettoyage terminé$(NC)\n\n"
 
@@ -173,6 +192,8 @@ rebuild: clean
 	$(DOCKER_COMPOSE_PHP) build --no-cache
 	$(DOCKER_COMPOSE_GO) build --no-cache
 	$(DOCKER_COMPOSE_PYTHON) build --no-cache
+	$(DOCKER_COMPOSE_DJANGO) build --no-cache
+	$(DOCKER_COMPOSE_NODE) build --no-cache
 	$(DOCKER_COMPOSE_DATABASE) build --no-cache
 	$(MAKE) start
 	$(PRINT) "$(GREEN)✅ Rebuild terminé$(NC)\n\n"
@@ -188,6 +209,9 @@ logs-go:
 
 logs-django:
 	$(DOCKER_COMPOSE_PYTHON) logs -f
+
+logs-node:
+	$(DOCKER_COMPOSE_NODE) logs -f
 
 logs-db:
 	$(DOCKER_COMPOSE_DATABASE) logs -f

@@ -1,0 +1,13 @@
+{
+    "name": "mini-api",
+    "version": "1.0.0",
+    "description": "Mini API Express",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "express": "^4.21.1"
+    }
+}

@@ -164,7 +164,7 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
 
@@ -407,344 +407,357 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">DKDEV</a>
-                <ul class="nav-links">
-                    <li><a href="#projects">Projets</a></li>
-                    <li><a href="#architecture">Architecture</a></li>
-                    <li><a href="#stats">Statistiques</a></li>
-                    <li><a href="#contact">Contact</a></li>
+<!-- Header -->
+<header>
+    <div class="container">
+        <nav>
+            <a href="#" class="logo">DKDEV</a>
+            <ul class="nav-links">
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#stats">Statistiques</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#projects" class="cta-button">Voir les Projets</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Infrastructure Docker Multisite</h1>
+            <p>Serveur Caddy reverse proxy gérant plusieurs applications et langages dans des conteneurs Docker isolés</p>
+
+            <div class="tech-badges">
+                <span class="tech-badge">Docker</span>
+                <span class="tech-badge">Caddy</span>
+                <span class="tech-badge">PHP</span>
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Go</span>
+                <span class="tech-badge">Node.js</span>
+                <span class="tech-badge">Laravel</span>
+                <span class="tech-badge">Symfony</span>
+                <span class="tech-badge">Django</span>
+            </div>
+
+            <div class="hero-buttons">
+                <a href="#projects" class="cta-button">Explorer les Projets</a>
+                <a href="#architecture" class="cta-button btn-secondary">Voir l'Architecture</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects -->
+<section class="projects" id="projects">
+    <div class="container">
+        <div class="section-title">
+            <h2>Mes Projets Déployés</h2>
+            <p>Applications variées servies par le reverse proxy Caddy</p>
+        </div>
+        <div class="projects-grid">
+            <!-- Ligne 1 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #ff2d20;">
+                    <i class="fab fa-laravel"></i>
+                </div>
+                <h3>Laravel</h3>
+                <p>Application PHP Laravel avec base de données MySQL</p>
+                <a data-subdomain="laravel" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon" style="background: #000000;">
+                    <i class="fab fa-symfony"></i>
+                </div>
+                <h3>Symfony</h3>
+                <p>Projet Symfony avec architecture MVC et fonctionnalités avancées</p>
+                <a data-subdomain="symfony" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon" style="background: #21759b;">
+                    <i class="fab fa-wordpress"></i>
+                </div>
+                <h3>Wordpress</h3>
+                <p>Un site Wordpress de base avec interface d'administration</p>
+                <a data-subdomain="wordpress" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <!-- Ligne 2 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #00add8;">
+                    <i class="fab fa-golang"></i>
+                </div>
+                <h3>Go Project</h3>
+                <p>Application Go légère et performante avec traitement concurrentiel</p>
+                <a data-subdomain="go" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon" style="background: #3776ab;">
+                    <i class="fab fa-python"></i>
+                </div>
+                <h3>Django</h3>
+                <p>Application Python Django avec interface d'administration et API REST</p>
+                <a data-subdomain="django" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon" style="background: #339933;">
+                    <i class="fab fa-node-js"></i>
+                </div>
+                <h3>Node.js API</h3>
+                <p>API REST avec Express.js, endpoints health check et messages</p>
+                <a data-subdomain="node" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <!-- Ligne 3 -->
+            <div class="project-card">
+                <div class="project-icon" style="background: #777bb4;">
+                    <i class="fab fa-php"></i>
+                </div>
+                <h3>PHP Simple</h3>
+                <p>Site PHP traditionnel avec fonctionnalités basiques</p>
+                <a data-subdomain="php" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon" style="background: #e34c26;">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <h3>HTML Statique</h3>
+                <p>Site web statique avec HTML5, CSS3 et JavaScript pur</p>
+                <a data-subdomain="html" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon" style="background: #6c78b4;">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>phpMyAdmin</h3>
+                <p>Interface d'administration bases de données MySQL/MariaDB</p>
+                <a data-subdomain="phpmyadmin" target="_blank" class="project-link">Visiter le Projet</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Architecture -->
+<section class="architecture" id="architecture">
+    <div class="container">
+        <div class="section-title">
+            <h2>Architecture Technique</h2>
+            <p>Comment fonctionne l'infrastructure multisite</p>
+        </div>
+        <div class="arch-diagram">
+            <div class="arch-item">
+                <div class="arch-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div>
+                    <h3>Reverse Proxy Caddy</h3>
+                    <p>Gère le routage des domaines vers les conteneurs appropriés avec SSL automatique</p>
+                </div>
+            </div>
+            <div class="arch-item">
+                <div class="arch-icon">
+                    <i class="fab fa-docker"></i>
+                </div>
+                <div>
+                    <h3>Conteneurs Docker</h3>
+                    <p>Chaque application fonctionne dans son propre environnement isolé</p>
+                </div>
+            </div>
+            <div class="arch-item">
+                <div class="arch-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div>
+                    <h3>Réseau Docker</h3>
+                    <p>Communication sécurisée entre les conteneurs via le réseau interne Docker</p>
+                </div>
+            </div>
+            <div class="arch-item">
+                <div class="arch-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div>
+                    <h3>Bases de Données</h3>
+                    <p>MariaDb (SQL) et Phpmyadmin dans des conteneurs dédiés pour chaque application</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="stats" id="stats">
+    <div class="container">
+        <div class="section-title">
+            <h2>En Chiffres</h2>
+            <p>Performances et disponibilité de l'infrastructure</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>9</h3>
+                <p>Applications déployées</p>
+            </div>
+            <div class="stat-item">
+                <h3>5</h3>
+                <p>Langages différents</p>
+            </div>
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>Uptime garanti</p>
+            </div>
+            <div class="stat-item">
+                <h3>&lt;100ms</h3>
+                <p>Temps de réponse moyen</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+    <div class="container">
+        <h2>Intéressé par cette architecture ?</h2>
+        <p>Je peux vous aider à déployer votre propre infrastructure multisite avec Docker et Caddy</p>
+        <a href="mailto:dj.khireddine@gmail.com" class="cta-button">Me Contacter</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>DKDEV</h4>
+                <p>Infrastructure Docker multisite avec reverse proxy Caddy.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-docker"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Projets</h4>
+                <ul class="footer-links">
+                    <li><a data-subdomain="laravel" target="_blank">Laravel</a></li>
+                    <li><a data-subdomain="symfony" target="_blank">Symfony</a></li>
+                    <li><a data-subdomain="django" target="_blank">Django</a></li>
+                    <li><a data-subdomain="go" target="_blank">Go Project</a></li>
+                    <li><a data-subdomain="node" target="_blank">Node.js API</a></li>
+                    <li><a data-subdomain="php" target="_blank">PHP Project</a></li>
+                    <li><a data-subdomain="html" target="_blank">HTML Statique</a></li>
+                    <li><a data-subdomain="phpmyadmin" target="_blank">phpMyAdmin</a></li>
                 </ul>
-                <a href="#projects" class="cta-button">Voir les Projets</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Infrastructure Docker Multisite</h1>
-                <p>Serveur Caddy reverse proxy gérant plusieurs applications et langages dans des conteneurs Docker isolés</p>
-                
-                <div class="tech-badges">
-                    <span class="tech-badge">Docker</span>
-                    <span class="tech-badge">Caddy</span>
-                    <span class="tech-badge">PHP</span>
-                    <span class="tech-badge">Python</span>
-                    <span class="tech-badge">Go</span>
-                    <span class="tech-badge">Laravel</span>
-                    <span class="tech-badge">Symfony</span>
-                    <span class="tech-badge">Django</span>
-                </div>
-
-                <div class="hero-buttons">
-                    <a href="#projects" class="cta-button">Explorer les Projets</a>
-                    <a href="#architecture" class="cta-button btn-secondary">Voir l'Architecture</a>
-                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Technologies</h4>
+                <ul class="footer-links">
+                    <li><a href="https://docker.com">Docker</a></li>
+                    <li><a href="https://caddyserver.com/">Caddy Server</a></li>
+                    <li><a href="https://www.python.org/">Python</a></li>
+                    <li><a href="https://go.dev/">Golang</a></li>
+                    <li><a href="https://www.php.net/">PHP</a></li>
+                    <li><a href="https://nodejs.org/">Node.js</a></li>
+                </ul>
             </div>
         </div>
-    </section>
-
-    <!-- Projects -->
-    <section class="projects" id="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>Mes Projets Déployés</h2>
-                <p>Applications variées servies par le reverse proxy Caddy</p>
-            </div>
-            <div class="projects-grid">
-                <!-- Ligne 1 -->
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fab fa-laravel"></i>
-                    </div>
-                    <h3>Laravel</h3>
-                    <p>Application PHP Laravel avec base de données MySQL</p>
-                    <a data-subdomain="laravel" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fab fa-symfony"></i>
-                    </div>
-                    <h3>Symfony</h3>
-                    <p>Projet Symfony avec architecture MVC et fonctionnalités avancées</p>
-                    <a data-subdomain="symfony" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fab fa-wordpress"></i>
-                    </div>
-                    <h3>Wordpress</h3>
-                    <p>Un site Wordpress de base avec interface d'administration</p>
-                    <a data-subdomain="wordpress" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fab fa-golang"></i>
-                    </div>
-                    <h3>Go Project</h3>
-                    <p>Application Go légère et performante avec traitement concurrentiel</p>
-                    <a data-subdomain="go" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-
-                <!-- Ligne 2 -->
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fab fa-php"></i>
-                    </div>
-                    <h3>PHP Simple</h3>
-                    <p>Site PHP traditionnel avec fonctionnalités basiques</p>
-                    <a data-subdomain="php" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <h3>Django</h3>
-                    <p>Application Python Django avec interface d'administration et API REST</p>
-                    <a data-subdomain="django" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fab fa-html5"></i>
-                    </div>
-                    <h3>HTML Statique</h3>
-                    <p>Site web statique avec HTML5, CSS3 et JavaScript pur</p>
-                    <a data-subdomain="html" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>phpMyAdmin</h3>
-                    <p>Interface d'administration bases de données MySQL/MariaDB</p>
-                    <a data-subdomain="phpmyadmin" target="_blank" class="project-link">Visiter le Projet</a>
-                </div>
-            </div>
+        <div class="copyright">
+            <p>&copy; 2025 DKDEV - Infrastructure Multisite. Tous droits réservés.</p>
         </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- Architecture -->
-    <section class="architecture" id="architecture">
-        <div class="container">
-            <div class="section-title">
-                <h2>Architecture Technique</h2>
-                <p>Comment fonctionne l'infrastructure multisite</p>
-            </div>
-            <div class="arch-diagram">
-                <div class="arch-item">
-                    <div class="arch-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <div>
-                        <h3>Reverse Proxy Caddy</h3>
-                        <p>Gère le routage des domaines vers les conteneurs appropriés avec SSL automatique</p>
-                    </div>
-                </div>
-                <div class="arch-item">
-                    <div class="arch-icon">
-                        <i class="fab fa-docker"></i>
-                    </div>
-                    <div>
-                        <h3>Conteneurs Docker</h3>
-                        <p>Chaque application fonctionne dans son propre environnement isolé</p>
-                    </div>
-                </div>
-                <div class="arch-item">
-                    <div class="arch-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <div>
-                        <h3>Réseau Docker</h3>
-                        <p>Communication sécurisée entre les conteneurs via le réseau interne Docker</p>
-                    </div>
-                </div>
-                <div class="arch-item">
-                    <div class="arch-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div>
-                        <h3>Bases de Données</h3>
-                        <p>MariaDb (SQL) et Phpmyadmin dans des conteneurs dédiés pour chaque application</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<script>
+    // === Script Dynamique des liens ===
+    (function() {
+        // Récupère le domaine depuis env.js si présent, sinon depuis l'URL
+        const baseDomain = (window.__ENV__ && window.__ENV__.DOMAIN) ||
+            window.location.hostname.split('.').slice(-2).join('.') ||
+            'localhost';
 
-    <!-- Stats -->
-    <section class="stats" id="stats">
-        <div class="container">
-            <div class="section-title">
-                <h2>En Chiffres</h2>
-                <p>Performances et disponibilité de l'infrastructure</p>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>8</h3>
-                    <p>Applications déployées</p>
-                </div>
-                <div class="stat-item">
-                    <h3>4</h3>
-                    <p>Langages différents</p>
-                </div>
-                <div class="stat-item">
-                    <h3>99.9%</h3>
-                    <p>Uptime garanti</p>
-                </div>
-                <div class="stat-item">
-                    <h3>&lt;100ms</h3>
-                    <p>Temps de réponse moyen</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        console.log('🌐 Domaine détecté :', baseDomain);
 
-    <!-- CTA -->
-    <section class="cta" id="contact">
-        <div class="container">
-            <h2>Intéressé par cette architecture ?</h2>
-            <p>Je peux vous aider à déployer votre propre infrastructure multisite avec Docker et Caddy</p>
-            <a href="mailto:dj.khireddine@gmail.com" class="cta-button">Me Contacter</a>
-        </div>
-    </section>
+        // Met à jour tous les liens dynamiques
+        document.querySelectorAll('[data-subdomain]').forEach(link => {
+            const sub = link.getAttribute('data-subdomain');
+            // Utilise HTTP pour localhost, HTTPS pour les autres domaines
+            const protocol = baseDomain === 'localhost' ? 'http' : 'https';
+            link.href = `${protocol}://${sub}.${baseDomain}`;
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h4>DKDEV</h4>
-                    <p>Infrastructure Docker multisite avec reverse proxy Caddy.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-docker"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h4>Projets</h4>
-                    <ul class="footer-links">
-                        <li><a data-subdomain="laravel" target="_blank">Laravel</a></li>
-                        <li><a data-subdomain="symfony" target="_blank">Symfony</a></li>
-                        <li><a data-subdomain="django" target="_blank">Django</a></li>
-                        <li><a data-subdomain="go" target="_blank">Go Project</a></li>
-                        <li><a data-subdomain="php" target="_blank">PHP Project</a></li>
-                        <li><a data-subdomain="html" target="_blank">HTML Statique</a></li>
-                        <li><a data-subdomain="phpmyadmin" target="_blank">phpMyAdmin</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Technologies</h4>
-                    <ul class="footer-links">
-                        <li><a href="https://docker.com">Docker</a></li>
-                        <li><a href="https://caddyserver.com/">Caddy Server</a></li>
-                        <li><a href="https://www.python.org/">Python</a></li>
-                        <li><a href="https://go.dev/">Golang</a></li>
-                        <li><a href="https://www.php.net/">PHP</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 DKDEV - Infrastructure Multisite. Tous droits réservés.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // === Script Dynamique des liens ===
-        (function() {
-            // Récupère le domaine depuis env.js si présent, sinon depuis l'URL
-            const baseDomain = (window.__ENV__ && window.__ENV__.DOMAIN) ||
-                window.location.hostname.split('.').slice(-2).join('.') ||
-                'localhost';
-
-            console.log('🌐 Domaine détecté :', baseDomain);
-
-            // Met à jour tous les liens dynamiques
-            document.querySelectorAll('[data-subdomain]').forEach(link => {
-                const sub = link.getAttribute('data-subdomain');
-                // Utilise HTTP pour localhost, HTTPS pour les autres domaines
-                const protocol = baseDomain === 'localhost' ? 'http' : 'https';
-                link.href = `${protocol}://${sub}.${baseDomain}`;
-
-                // Met à jour aussi le texte si l'élément a un span pour l'URL
-                const urlSpan = link.querySelector('.project-url');
-                if (urlSpan) {
-                    urlSpan.textContent = `${sub}.${baseDomain}`;
-                }
-            });
-        })();
-
-        // Smooth scroll pour les ancres
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+            // Met à jour aussi le texte si l'élément a un span pour l'URL
+            const urlSpan = link.querySelector('.project-url');
+            if (urlSpan) {
+                urlSpan.textContent = `${sub}.${baseDomain}`;
+            }
         });
+    })();
 
-        // Animation au scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    // Arrête d'observer une fois l'animation déclenchée
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observer les éléments à animer
-        document.addEventListener('DOMContentLoaded', function() {
-            const animatedElements = document.querySelectorAll('.project-card, .arch-item, .stat-item, .feature-card');
-
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(el);
-            });
+    // Smooth scroll pour les ancres
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
+    });
 
-        // Gestion du chargement des images pour éviter les sauts de layout
-        document.addEventListener('DOMContentLoaded', function() {
-            const images = document.querySelectorAll('img');
-            images.forEach(img => {
-                if (img.complete) {
-                    img.style.opacity = '1';
-                } else {
-                    img.addEventListener('load', function() {
-                        this.style.opacity = '1';
-                    });
-                    img.style.opacity = '0';
-                    img.style.transition = 'opacity 0.3s ease';
-                }
-            });
+    // Animation au scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                // Arrête d'observer une fois l'animation déclenchée
+                observer.unobserve(entry.target);
+            }
         });
-    </script>
+    }, observerOptions);
+
+    // Observer les éléments à animer
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedElements = document.querySelectorAll('.project-card, .arch-item, .stat-item, .feature-card');
+
+        animatedElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    });
+
+    // Gestion du chargement des images pour éviter les sauts de layout
+    document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            if (img.complete) {
+                img.style.opacity = '1';
+            } else {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.3s ease';
+            }
+        });
+    });
+</script>
 </body>
 </html>

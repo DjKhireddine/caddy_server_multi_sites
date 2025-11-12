@@ -1,0 +1,24 @@
+services:
+  node:
+    image: node:20-alpine
+    container_name: node
+    working_dir: /app
+    command: ["node", "index.js"]
+    environment:
+      NODE_ENV: production
+      PORT: ${NODE_INTERNAL_PORT}
+    volumes:
+      - ../../sites/NODE/express:/app:rw
+    networks:
+      app_network:
+        aliases: ["node"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:${NODE_INTERNAL_PORT}/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+networks:
+  app_network:
+    external: true

@@ -54,3 +54,7 @@ www.{$DOMAIN} {
 {$SUBDOMAIN_DJANGO}.{$DOMAIN} {
 	reverse_proxy django:{$DJANGO_INTERNAL_PORT}
 }
+
+{$SUBDOMAIN_NODE}.{$DOMAIN} {
+    reverse_proxy node:{$NODE_INTERNAL_PORT}
+}

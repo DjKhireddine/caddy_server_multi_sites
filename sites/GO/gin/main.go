@@ -1,85 +1,59 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Book struct {
-	Title       string
-	Author      string
-	Price       float64
-	Cover       string
-	Description string
-	Category    string
-}
-
-type PageData struct {
-	PageTitle     string
-	FeaturedBooks []Book
-	Categories    []string
-}
-
-func getBooksFromJsonFile() ([]Book, error) {
-	var books []Book
-	jsonFile, err := os.Open("books.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	byteValue, _ := io.ReadAll(jsonFile)
-
-	err = json.Unmarshal(byteValue, &books)
-	if err != nil {
-		return nil, err
-	}
-
-	return books, nil
-}
-
 func main() {
-	// Create a Gin router with default middleware (logger and recovery)
 	router := gin.Default()
+
+	// Charger les templates HTML
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/static", "./static")
 
-	featuredBooks, _ := getBooksFromJsonFile()
-
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", PageData{
-			PageTitle:     "Go Gin - Livres & eBooks",
-			FeaturedBooks: featuredBooks,
-			Categories:    []string{"Roman", "Polar", "Science-Fiction", "Fantasy", "Biographie", "Jeunesse"},
-		})
-	})
-
-	router.GET("/api/books", func(c *gin.Context) {
-		// Return JSON response
-		c.JSON(http.StatusOK, gin.H{
-			"books": featuredBooks,
-		})
-	})
-
-	// Choix du port
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = os.Getenv("GO_INTERNAL_PORT")
-	}
-	if port == "" {
-		port = "80" // fallback
+		port = "80"
 	}
 
-	// Ecoute sur 0.0.0.0
-	err := router.Run(":" + port)
-	if err != nil {
-		fmt.Printf("Error starting server: %s\n", err)
-		return
-	}
+	// Routes de l'API
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{
+			"Port": port,
+		})
+	})
 
-	fmt.Println("Server running on port " + port)
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status":      "ok",
+			"message":     "Go Gin API is running",
+			"gin_version": gin.Version,
+		})
+	})
+
+	router.GET("/api/hello", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Hello from Go + Gin! 🚀",
+			"tech":    "Golang Gin Framework",
+		})
+	})
+
+	router.GET("/api/status", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status":    "running",
+			"framework": "Gin",
+			"language":  "Go",
+			"performance": gin.H{
+				"goroutines": "high",
+				"memory":     "low",
+				"speed":      "fast",
+			},
+		})
+	})
+
+	// Démarrer le serveur
+	router.Run(":" + port)
 }
