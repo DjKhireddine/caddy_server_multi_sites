@@ -24,19 +24,11 @@ Thumbs.db
 # ========== DEPENDENCIES ==========
 
 # PHP (Laravel/Symfony)
-vendor/
-composer.lock
-# Laravel specific
-bootstrap/cache/
-storage/framework/cache/
-storage/framework/views/
-storage/logs/
-.env.backup
-.phpunit.result.cache
-# Symfony specific
-var/cache/
-var/logs/
-var/sessions/
+sites/PHP/laravel/*
+!sites/PHP/laravel/.gitkeep
+
+sites/PHP/symfony/*
+!sites/PHP/symfony/.gitkeep
 
 # Python (Django)
 __pycache__/
@@ -110,4 +102,3 @@ build/
 *.db
 *.sql
 *.sqlite
-

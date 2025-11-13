@@ -88,55 +88,18 @@ Add these lines:
 - Add the same lines as above
 - Save the file
 
-### 5. Prepare Application Directories
-```bash
-# Create necessary directories (if they don't exist)
-mkdir -p sites/PHP/laravel/public
-mkdir -p sites/PHP/symfony/public
-mkdir -p sites/PHP/wordpress
-mkdir -p sites/PHP/php-simple
-mkdir -p sites/PHP/html
-mkdir -p sites/PHP/landingpage
-mkdir -p sites/GO/library
-mkdir -p sites/PYTHON/django
-```
-
 ## 🗄️ Database Setup
 ### Create Databases for Applications
-After starting the stack, you can create databases for your applications:
+After starting the stack, ensure the wordpress db exists or create it.
 
+## Install missed applications
 ```bash
-# Access MySQL container
-docker compose exec db mysql -u root -p
-
-# In MySQL, create databases:
-CREATE DATABASE laravel;
-CREATE DATABASE symfony;
-CREATE DATABASE wordpress;
-CREATE DATABASE django;
-exit;
-```
-
-### Application Database Configuration
-Laravel (.env in sites/PHP/laravel/)
-```env
-DB_CONNECTION=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=user
-DB_PASSWORD=your_DB_PASSWORD
-```
-Symfony (.env in sites/PHP/symfony/)
-```env
-DATABASE_URL="mysql://user:your_DB_PASSWORD@db:3306/symfony?serverVersion=8.0&charset=utf8mb4"
-```
-WordPress (wp-config.php in sites/PHP/wordpress/)
-```php
-define('DB_NAME', getenv('DB_NAME') ?: 'wordpress');
-define('DB_USER', getenv('DB_USER') ?: 'wordpress_user');
-define('DB_PASSWORD', getenv('DB_PASSWORD') ?: 'password');
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+# access to your PHP path
+cd site/PHP
+# create laravel project
+composer create-project laravel/laravel laravel
+# create symfony project
+composer create-project symfony/skeleton symfony
 ```
 
 ## 🚀 Usage

@@ -7,7 +7,6 @@ echo "🔧 Initialisation personnalisée de la base de données..."
 : "${MARIADB_ROOT_PASSWORD:?MARIADB_ROOT_PASSWORD manquant}"
 : "${MARIADB_USER:?MARIADB_USER manquant}"
 : "${MARIADB_PASSWORD:?MARIADB_PASSWORD manquant}"
-: "${DB_LARAVEL:?DB_LARAVEL manquant}"
 : "${DB_WORDPRESS:?DB_WORDPRESS manquant}"
 : "${DB_DJANGO:?DB_DJANGO manquant}"
 
@@ -17,7 +16,6 @@ mariadb -u root -p"$MARIADB_ROOT_PASSWORD" <<EOF
 CREATE USER IF NOT EXISTS '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_PASSWORD}';
 
 -- Bases
-CREATE DATABASE IF NOT EXISTS \`${DB_LARAVEL}\`  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE IF NOT EXISTS \`${DB_WORDPRESS}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE IF NOT EXISTS \`${DB_DJANGO}\`   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
