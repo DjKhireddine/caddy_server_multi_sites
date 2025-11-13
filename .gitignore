@@ -24,11 +24,8 @@ Thumbs.db
 # ========== DEPENDENCIES ==========
 
 # PHP (Laravel/Symfony)
-sites/PHP/laravel/*
-!sites/PHP/laravel/.gitkeep
-
-sites/PHP/symfony/*
-!sites/PHP/symfony/.gitkeep
+sites/PHP/laravel
+sites/PHP/symfony
 
 # Python (Django)
 __pycache__/
