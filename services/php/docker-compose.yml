@@ -13,6 +13,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_LARAVEL: ${DB_LARAVEL}
       DB_WORDPRESS: ${DB_WORDPRESS}
+      LARAVEL_URL: ${SUBDOMAIN_LARAVEL}.${DOMAIN}
     volumes:
       - ../../sites:${PROJECTS_PATH}
     networks:
