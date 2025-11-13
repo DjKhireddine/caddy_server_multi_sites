@@ -25,7 +25,7 @@ Thumbs.db
 
 # PHP (Laravel/Symfony)
 sites/PHP/laravel/*
-!sites/PHP/laravel/.gitkeep2
+!sites/PHP/laravel/.gitkeep
 
 sites/PHP/symfony/*
 !sites/PHP/symfony/.gitkeep
