@@ -193,19 +193,22 @@ caddy_server_multi_sites/
 │   └── 🚀 start-caddy.sh          # Startup script
 ├── 📁 services/                   # Individual service configs
 │   ├── 📁 php/                    # PHP-FPM configuration
-│   ├── 📁 go/                     # Go application
-│   ├── 📁 python/                 # Django application
-│   └── 📁 database/               # MariaDB + phpMyAdmin
+│   ├── 📁 go/                     # Go service
+│   ├── 📁 node/                   # Node service
+│   ├── 📁 python/                 # Django service
+│   └── 📁 database/               # MariaDB + phpMyAdmin services
 └── 📁 sites/                      # Web applications
     ├── 📁 PHP/
     │   ├── 🎯 laravel/            # Laravel application
-    │   ├── ⚡ symfony/            # Symfony application
+    │   ├── ⚡ symfony/             # Symfony application
     │   ├── 📝 wordpress/          # WordPress site
     │   ├── 🐘 php-simple/         # Simple PHP scripts
     │   ├── 🌐 html/               # Static HTML site
     │   └── 📱 landingpage/        # Landing page
+    ├── 📁 NODE/
+    │   └── 🎯 express/            # NodeJS application
     ├── 📁 GO/
-    │   └── 📚 library/            # Go application
+    │   └── 📚 gin/                # Go application
     └── 📁 PYTHON/
         └── 🐍 django/             # Django project
 ```
