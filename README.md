@@ -90,7 +90,17 @@ Add these lines:
 
 ## 🗄️ Database Setup
 ### Create Databases for Applications
-After starting the stack, ensure the wordpress db exists or create it.
+After starting the stack, you can create databases for your Wordpress and Django applications:
+
+```bash
+# Access MySQL container
+docker compose exec db mysql -u root -p
+
+# In MySQL, create databases:
+CREATE DATABASE wordpress;
+CREATE DATABASE django;
+exit;
+```
 
 ## Install missed applications
 ```bash
@@ -119,15 +129,15 @@ This will start:
 ### Access Your Applications
 After starting, access these URLs in your browser:
 
-- 🌐 HTML Site: http://html.your_domain.dev
-- 🐘 PHP Simple: http://php.your_domain.dev
-- 📱 Landing Page: http://landing.your_domain.dev
-- ⚡ Laravel: http://laravel.your_domain.dev
-- 🎯 Symfony: http://symfony.your_domain.dev
-- 📝 WordPress: http://wordpress.your_domain.dev
-- 🛠️ Go App: http://go.your_domain.dev
-- 🐍 Django: http://django.your_domain.dev
-- 🗄️ phpMyAdmin: http://phpmyadmin.your_domain.dev
+- 🌐 HTML Site: https://html.your_domain.dev
+- 🐘 PHP Simple: https://php.your_domain.dev
+- 📱 Landing Page: https://landing.your_domain.dev
+- ⚡ Laravel: https://laravel.your_domain.dev
+- 🎯 Symfony: https://symfony.your_domain.dev
+- 📝 WordPress: https://wordpress.your_domain.dev
+- 🛠️ Go App: https://go.your_domain.dev
+- 🐍 Django: https://django.your_domain.dev
+- 🗄️ phpMyAdmin: https://phpmyadmin.your_domain.dev
 
 ### Management Commands
 ```bash

@@ -6,14 +6,10 @@ services:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD: ${DB_PASSWORD}
-      DB_LARAVEL: ${DB_LARAVEL}
-      DB_WORDPRESS: ${DB_WORDPRESS}
-      DB_DJANGO: ${DB_DJANGO}
     ports:
       - "3306:3306"
     volumes:
       - ./db_data:/var/lib/mysql
-      - ./scripts:/docker-entrypoint-initdb.d:ro
     networks:
       - db_network
     restart: unless-stopped
