@@ -88,20 +88,6 @@ Add these lines:
 - Add the same lines as above
 - Save the file
 
-## 🗄️ Database Setup
-### Create Databases for Applications
-After starting the stack, you can create databases for your Wordpress and Django applications:
-
-```bash
-# Access MySQL container
-docker compose exec db mysql -u root -p
-
-# In MySQL, create databases:
-CREATE DATABASE wordpress;
-CREATE DATABASE django;
-exit;
-```
-
 ## Install missed applications
 ```bash
 # access to your PHP path
@@ -126,6 +112,30 @@ This will start:
 - ✅ phpMyAdmin (port 8080)
 - ✅ Go application
 - ✅ Django application
+
+## 🗄️ Database Setup
+### Create Databases for Applications
+After starting the stack, you can create databases for your Wordpress and Django applications:
+
+```bash
+# Access MySQL container
+docker compose exec db mysql -u root -p
+
+# In MySQL, create databases:
+CREATE DATABASE wordpress;
+CREATE DATABASE django;
+
+GRANT ALL PRIVILEGES ON wordpress.* TO 'your_db_user'@'%';
+GRANT ALL PRIVILEGES ON django.* TO 'your_db_user'@'%';
+
+FLUSH PRIVILEGES;
+
+```
+
+### Restart your applications
+```bash
+make restart
+```
 
 ### Access Your Applications
 After starting, access these URLs in your browser:
