@@ -114,6 +114,7 @@ composer create-project symfony/skeleton symfony
 
 ## 🚀 Usage
 ### Start All Services
+From the root of your project
 ```bash
 make start
 ```
