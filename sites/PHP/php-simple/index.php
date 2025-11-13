@@ -24,7 +24,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #000000 100%);
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
@@ -326,4 +326,3 @@
 
 </body>
 </html>
-

@@ -18,6 +18,7 @@ services:
     networks:
       - app_network
       - db_network
+    restart: unless-stopped
 
 networks:
   app_network:

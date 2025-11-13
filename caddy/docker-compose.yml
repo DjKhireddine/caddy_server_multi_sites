@@ -43,6 +43,7 @@ services:
       DJANGO_INTERNAL_PORT: ${DJANGO_INTERNAL_PORT}
     networks:
       - app_network
+    restart: unless-stopped
 
 networks:
   app_network:

@@ -15,7 +15,8 @@ services:
       - ./db_data:/var/lib/mysql
       - ./scripts:/docker-entrypoint-initdb.d:ro
     networks:
-      - db_network  # Uniquement pour les services qui en ont besoin
+      - db_network
+    restart: unless-stopped
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
