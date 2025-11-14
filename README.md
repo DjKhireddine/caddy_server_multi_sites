@@ -98,22 +98,11 @@ composer create-project laravel/laravel laravel
 composer create-project symfony/skeleton symfony
 ```
 
-## 🚀 Usage
-### Start All Services
-From the root of your project
-```bash
-make start
-```
-This will start:
-
-- ✅ Caddy reverse proxy (port 80)
-- ✅ PHP-FPM service
-- ✅ MariaDB database
-- ✅ phpMyAdmin (port 8080)
-- ✅ Go application
-- ✅ Django application
-
 ## 🗄️ Database Setup
+### Start database service
+```bash
+make start-db
+```
 ### Create Databases for Applications
 After starting the stack, you can create databases for your Wordpress and Django applications:
 
@@ -132,10 +121,20 @@ FLUSH PRIVILEGES;
 
 ```
 
-### Restart your applications
+## 🚀 Usage
+### Start All Services
+From the root of your project
 ```bash
-make restart
+make start
 ```
+This will start:
+
+- ✅ Caddy reverse proxy (port 80)
+- ✅ PHP-FPM service
+- ✅ MariaDB database
+- ✅ phpMyAdmin (port 8080)
+- ✅ Go application
+- ✅ Django application
 
 ### Access Your Applications
 After starting, access these URLs in your browser:
