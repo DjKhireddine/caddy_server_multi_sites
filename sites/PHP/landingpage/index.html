@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DKDEV - Serveur Caddy Docker Multisite</title>
+    <title>DKDEV - Caddy Docker Multisite Server</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,17 +14,38 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #f59e0b;
-            --dark: #1f2937;
-            --light: #f8fafc;
-            --gray: #6b7280;
+            /* Couleurs principales */
+            --color-primary: #3b82f6;
+            --color-primary-dark: #1e40af;
+            --color-secondary: #8b5cf6;
+            --color-accent: #f59e0b;
+
+            /* Thème clair */
+            --light-bg: #ffffff;
+            --light-bg-secondary: #f8fafc;
+            --light-text: #1e293b;
+            --light-text-secondary: #64748b;
+            --light-border: #e2e8f0;
+            --light-card: #ffffff;
+
+            /* Thème sombre */
+            --dark-bg: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            --dark-bg-solid: #1e40af;
+            --dark-text: #ffffff;
+            --dark-text-secondary: #e2e8f0;
+            --dark-border: rgba(255, 255, 255, 0.1);
+            --dark-card: rgba(255, 255, 255, 0.1);
+
+            /* Utilitaires */
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --border-radius: 15px;
+            --transition: all 0.3s ease;
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--dark);
+            background: var(--light-bg);
+            color: var(--light-text);
             line-height: 1.6;
         }
 
@@ -34,15 +55,61 @@
             padding: 0 20px;
         }
 
+        /* Sections alternées */
+        .section-light {
+            background: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        .section-dark {
+            background: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        .section-secondary {
+            background: var(--light-bg-secondary);
+            color: var(--light-text);
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .lang-btn:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
         /* Header */
         header {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--light-border);
         }
 
         nav {
@@ -55,8 +122,20 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--color-primary);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-badge {
+            background: var(--color-primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
         }
 
         .nav-links {
@@ -68,33 +147,34 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--dark);
+            color: var(--light-text);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: var(--transition);
             padding: 0.5rem 1rem;
             border-radius: 25px;
             border: 2px solid transparent;
         }
 
         .nav-links a:hover {
-            color: var(--primary);
-            border-color: var(--primary);
+            color: var(--color-primary);
+            border-color: var(--color-primary);
         }
 
         .cta-button {
-            background: var(--primary);
+            background: var(--color-primary);
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
-            border: 2px solid var(--primary);
+            transition: var(--transition);
+            border: 2px solid var(--color-primary);
         }
 
         .cta-button:hover {
             background: transparent;
-            color: var(--primary);
+            color: var(--color-primary);
+            transform: translateY(-2px);
         }
 
         /* Hero Section */
@@ -103,7 +183,11 @@
             display: flex;
             align-items: center;
             padding: 100px 0 50px;
-            color: white;
+        }
+
+        .hero.section-dark {
+            background: var(--dark-bg);
+            color: var(--dark-text);
         }
 
         .hero-content {
@@ -118,10 +202,21 @@
             line-height: 1.2;
         }
 
+        .section-dark .hero h1 {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .hero p {
             font-size: 1.25rem;
             margin-bottom: 2rem;
             opacity: 0.9;
+        }
+
+        .section-light .hero p {
+            color: var(--light-text-secondary);
         }
 
         .tech-badges {
@@ -133,17 +228,57 @@
         }
 
         .tech-badge {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--color-primary);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: var(--transition);
             backdrop-filter: blur(10px);
+        }
+
+        .section-dark .tech-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--dark-text);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .tech-badge:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .section-dark .btn-secondary {
+            border-color: white;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .section-dark .btn-secondary:hover {
+            background: white;
+            color: var(--color-primary);
         }
 
         /* Projects Grid */
         .projects {
             padding: 100px 0;
-            background: white;
         }
 
         .section-title {
@@ -153,41 +288,69 @@
 
         .section-title h2 {
             font-size: 2.5rem;
-            color: var(--dark);
             margin-bottom: 1rem;
         }
 
+        .section-light .section-title h2 {
+            color: var(--light-text);
+        }
+
         .section-title p {
-            color: var(--light);
             font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .section-light .section-title p {
+            color: var(--light-text-secondary);
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
         }
 
         .project-card {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 15px;
+            background: var(--light-card);
+            padding: 2rem;
+            border-radius: var(--border-radius);
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #e5e7eb;
+            transition: var(--transition);
+            border: 1px solid var(--light-border);
+            box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
         }
 
+        .section-secondary .project-card {
+            background: var(--light-bg);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--color-primary);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
         }
 
         .project-icon {
             width: 80px;
             height: 80px;
-            background: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -195,48 +358,62 @@
             margin: 0 auto 1.5rem;
             color: white;
             font-size: 2rem;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1);
         }
 
         .project-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--dark);
+        }
+
+        .section-light .project-card h3 {
+            color: var(--light-text);
         }
 
         .project-card p {
-            color: var(--gray);
             margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .section-light .project-card p {
+            color: var(--light-text-secondary);
         }
 
         .project-link {
-            display: inline-block;
-            background: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-primary);
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 25px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
 
         .project-link:hover {
-            background: var(--primary-dark);
+            background: var(--color-primary-dark);
             transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
         }
 
         /* Architecture */
         .architecture {
             padding: 100px 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
         }
 
         .arch-diagram {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--dark-card);
             padding: 3rem;
-            border-radius: 20px;
+            border-radius: var(--border-radius);
             backdrop-filter: blur(10px);
             margin-top: 2rem;
+            border: 1px solid var(--dark-border);
         }
 
         .arch-item {
@@ -246,6 +423,13 @@
             padding: 1.5rem;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
+            transition: var(--transition);
+            border: 1px solid var(--dark-border);
+        }
+
+        .arch-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .arch-icon {
@@ -258,12 +442,12 @@
             justify-content: center;
             margin-right: 1.5rem;
             font-size: 1.5rem;
+            flex-shrink: 0;
         }
 
         /* Stats */
         .stats {
             padding: 80px 0;
-            background: white;
         }
 
         .stats-grid {
@@ -275,21 +459,37 @@
 
         .stat-item {
             padding: 2rem;
-            background: var(--light);
-            border-radius: 15px;
+            background: var(--light-card);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: 1px solid var(--light-border);
+            box-shadow: var(--shadow);
+        }
+
+        .section-secondary .stat-item {
+            background: var(--light-bg);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primary);
         }
 
         .stat-item h3 {
             font-size: 3rem;
             margin-bottom: 0.5rem;
-            color: var(--primary);
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            color: var(--light-text-secondary);
+            font-weight: 500;
         }
 
         /* CTA */
         .cta {
             padding: 100px 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
             text-align: center;
         }
 
@@ -309,7 +509,7 @@
 
         /* Footer */
         footer {
-            background: var(--dark);
+            background: var(--light-text);
             color: white;
             padding: 60px 0 30px;
         }
@@ -337,7 +537,7 @@
         .footer-links a {
             color: #d1d5db;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: var(--transition);
         }
 
         .footer-links a:hover {
@@ -360,11 +560,12 @@
             justify-content: center;
             color: white;
             text-decoration: none;
-            transition: background 0.3s;
+            transition: var(--transition);
         }
 
         .social-links a:hover {
-            background: var(--primary);
+            background: var(--color-primary);
+            transform: translateY(-2px);
         }
 
         .copyright {
@@ -375,12 +576,6 @@
         }
 
         /* Responsive */
-        @media (max-width: 1200px) {
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -403,32 +598,58 @@
                 margin-right: 0;
                 margin-bottom: 1rem;
             }
+
+            .language-switcher {
+                top: 80px;
+                right: 10px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
+<!-- Language Switcher -->
+<div class="language-switcher">
+    <button class="lang-btn" onclick="toggleLanguage()">
+        <i class="fas fa-language"></i>
+        <span class="lang-text">FR</span>
+    </button>
+</div>
+
 <!-- Header -->
 <header>
     <div class="container">
         <nav>
-            <a href="#" class="logo">DKDEV</a>
+            <a href="#" class="logo">
+                DKDEV
+                <span class="logo-badge">v2.0</span>
+            </a>
             <ul class="nav-links">
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#architecture">Architecture</a></li>
-                <li><a href="#stats">Statistiques</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#projects" data-en="Projects" data-fr="Projets">Projects</a></li>
+                <li><a href="#architecture" data-en="Architecture" data-fr="Architecture">Architecture</a></li>
+                <li><a href="#stats" data-en="Statistics" data-fr="Statistiques">Statistics</a></li>
+                <li><a href="#contact" data-en="Contact" data-fr="Contact">Contact</a></li>
             </ul>
-            <a href="#projects" class="cta-button">Voir les Projets</a>
+            <a href="#projects" class="cta-button" data-en="View Projects" data-fr="Voir les Projets">View Projects</a>
         </nav>
     </div>
 </header>
 
 <!-- Hero Section -->
-<section class="hero">
+<section class="hero section-dark">
     <div class="container">
         <div class="hero-content">
-            <h1>Infrastructure Docker Multisite</h1>
-            <p>Serveur Caddy reverse proxy gérant plusieurs applications et langages dans des conteneurs Docker isolés</p>
+            <h1 data-en="Docker Multisite Infrastructure" data-fr="Infrastructure Docker Multisite">
+                Docker Multisite Infrastructure
+            </h1>
+            <p data-en="Caddy reverse proxy server managing multiple applications and languages in isolated Docker containers"
+               data-fr="Serveur Caddy reverse proxy gérant plusieurs applications et langages dans des conteneurs Docker isolés">
+                Caddy reverse proxy server managing multiple applications and languages in isolated Docker containers
+            </p>
 
             <div class="tech-badges">
                 <span class="tech-badge">Docker</span>
@@ -437,35 +658,43 @@
                 <span class="tech-badge">Python</span>
                 <span class="tech-badge">Go</span>
                 <span class="tech-badge">Node.js</span>
+                <span class="tech-badge">Java</span>
                 <span class="tech-badge">Laravel</span>
                 <span class="tech-badge">Symfony</span>
                 <span class="tech-badge">Django</span>
             </div>
 
             <div class="hero-buttons">
-                <a href="#projects" class="cta-button">Explorer les Projets</a>
-                <a href="#architecture" class="cta-button btn-secondary">Voir l'Architecture</a>
+                <a href="#projects" class="cta-button" data-en="Explore Projects" data-fr="Explorer les Projets">Explore Projects</a>
+                <a href="#architecture" class="cta-button btn-secondary" data-en="View Architecture" data-fr="Voir l'Architecture">View Architecture</a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Projects -->
-<section class="projects" id="projects">
+<section id="projects" class="projects section-light">
     <div class="container">
         <div class="section-title">
-            <h2>Mes Projets Déployés</h2>
-            <p>Applications variées servies par le reverse proxy Caddy</p>
+            <h2 data-en="My Deployed Projects" data-fr="Mes Projets Déployés">My Deployed Projects</h2>
+            <p data-en="Various applications served by Caddy reverse proxy" data-fr="Applications variées servies par le reverse proxy Caddy">
+                Various applications served by Caddy reverse proxy
+            </p>
         </div>
         <div class="projects-grid">
-            <!-- Ligne 1 -->
+            <!-- Projects remain the same, only text content will be translated -->
             <div class="project-card">
                 <div class="project-icon" style="background: #ff2d20;">
                     <i class="fab fa-laravel"></i>
                 </div>
                 <h3>Laravel</h3>
-                <p>Application PHP Laravel avec base de données MySQL</p>
-                <a data-subdomain="laravel" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="PHP Laravel application with MySQL database" data-fr="Application PHP Laravel avec base de données MySQL">
+                    PHP Laravel application with MySQL database
+                </p>
+                <a data-subdomain="laravel" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
             <div class="project-card">
@@ -473,8 +702,13 @@
                     <i class="fab fa-symfony"></i>
                 </div>
                 <h3>Symfony</h3>
-                <p>Projet Symfony avec architecture MVC et fonctionnalités avancées</p>
-                <a data-subdomain="symfony" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="Symfony project with MVC architecture and advanced features" data-fr="Projet Symfony avec architecture MVC et fonctionnalités avancées">
+                    Symfony project with MVC architecture and advanced features
+                </p>
+                <a data-subdomain="symfony" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
             <div class="project-card">
@@ -482,18 +716,27 @@
                     <i class="fab fa-wordpress"></i>
                 </div>
                 <h3>Wordpress</h3>
-                <p>Un site Wordpress de base avec interface d'administration</p>
-                <a data-subdomain="wordpress" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="Basic WordPress site with admin interface" data-fr="Un site Wordpress de base avec interface d'administration">
+                    Basic WordPress site with admin interface
+                </p>
+                <a data-subdomain="wordpress" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
-            <!-- Ligne 2 -->
             <div class="project-card">
                 <div class="project-icon" style="background: #00add8;">
                     <i class="fab fa-golang"></i>
                 </div>
                 <h3>Go Project</h3>
-                <p>Application Go légère et performante avec traitement concurrentiel</p>
-                <a data-subdomain="go" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="Lightweight and performant Go application with concurrent processing" data-fr="Application Go légère et performante avec traitement concurrentiel">
+                    Lightweight and performant Go application with concurrent processing
+                </p>
+                <a data-subdomain="go" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
             <div class="project-card">
@@ -501,8 +744,13 @@
                     <i class="fab fa-python"></i>
                 </div>
                 <h3>Django</h3>
-                <p>Application Python Django avec interface d'administration et API REST</p>
-                <a data-subdomain="django" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="Python Django application with admin interface and REST API" data-fr="Application Python Django avec interface d'administration et API REST">
+                    Python Django application with admin interface and REST API
+                </p>
+                <a data-subdomain="django" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
             <div class="project-card">
@@ -510,27 +758,41 @@
                     <i class="fab fa-node-js"></i>
                 </div>
                 <h3>Node.js API</h3>
-                <p>API REST avec Express.js, endpoints health check et messages</p>
-                <a data-subdomain="node" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="REST API with Express.js, health check endpoints and messages" data-fr="API REST avec Express.js, endpoints health check et messages">
+                    REST API with Express.js, health check endpoints and messages
+                </p>
+                <a data-subdomain="node" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
-            <!-- Ligne 3 -->
             <div class="project-card">
                 <div class="project-icon" style="background: #777bb4;">
                     <i class="fab fa-php"></i>
                 </div>
                 <h3>PHP Simple</h3>
-                <p>Site PHP traditionnel avec fonctionnalités basiques</p>
-                <a data-subdomain="php" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="Traditional PHP site with basic features" data-fr="Site PHP traditionnel avec fonctionnalités basiques">
+                    Traditional PHP site with basic features
+                </p>
+                <a data-subdomain="php" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
             <div class="project-card">
                 <div class="project-icon" style="background: #e34c26;">
                     <i class="fab fa-html5"></i>
                 </div>
-                <h3>HTML Statique</h3>
-                <p>Site web statique avec HTML5, CSS3 et JavaScript pur</p>
-                <a data-subdomain="html" target="_blank" class="project-link">Visiter le Projet</a>
+                <h3>Static HTML</h3>
+                <p data-en="Static website with HTML5, CSS3 and pure JavaScript" data-fr="Site web statique avec HTML5, CSS3 et JavaScript pur">
+                    Static website with HTML5, CSS3 and pure JavaScript
+                </p>
+                <a data-subdomain="html" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
 
             <div class="project-card">
@@ -538,19 +800,26 @@
                     <i class="fas fa-database"></i>
                 </div>
                 <h3>phpMyAdmin</h3>
-                <p>Interface d'administration bases de données MySQL/MariaDB</p>
-                <a data-subdomain="phpmyadmin" target="_blank" class="project-link">Visiter le Projet</a>
+                <p data-en="MySQL/MariaDB database administration interface" data-fr="Interface d'administration bases de données MySQL/MariaDB">
+                    MySQL/MariaDB database administration interface
+                </p>
+                <a data-subdomain="phpmyadmin" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span data-en="Visit Project" data-fr="Visiter le Projet">Visit Project</span>
+                </a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Architecture -->
-<section class="architecture" id="architecture">
+<section id="architecture" class="architecture section-dark">
     <div class="container">
         <div class="section-title">
-            <h2>Architecture Technique</h2>
-            <p>Comment fonctionne l'infrastructure multisite</p>
+            <h2 data-en="Technical Architecture" data-fr="Architecture Technique">Technical Architecture</h2>
+            <p data-en="How the multisite infrastructure works" data-fr="Comment fonctionne l'infrastructure multisite">
+                How the multisite infrastructure works
+            </p>
         </div>
         <div class="arch-diagram">
             <div class="arch-item">
@@ -558,8 +827,11 @@
                     <i class="fas fa-globe"></i>
                 </div>
                 <div>
-                    <h3>Reverse Proxy Caddy</h3>
-                    <p>Gère le routage des domaines vers les conteneurs appropriés avec SSL automatique</p>
+                    <h3 data-en="Caddy Reverse Proxy" data-fr="Reverse Proxy Caddy">Caddy Reverse Proxy</h3>
+                    <p data-en="Manages domain routing to appropriate containers with automatic SSL"
+                       data-fr="Gère le routage des domaines vers les conteneurs appropriés avec SSL automatique">
+                        Manages domain routing to appropriate containers with automatic SSL
+                    </p>
                 </div>
             </div>
             <div class="arch-item">
@@ -567,8 +839,11 @@
                     <i class="fab fa-docker"></i>
                 </div>
                 <div>
-                    <h3>Conteneurs Docker</h3>
-                    <p>Chaque application fonctionne dans son propre environnement isolé</p>
+                    <h3 data-en="Docker Containers" data-fr="Conteneurs Docker">Docker Containers</h3>
+                    <p data-en="Each application runs in its own isolated environment"
+                       data-fr="Chaque application fonctionne dans son propre environnement isolé">
+                        Each application runs in its own isolated environment
+                    </p>
                 </div>
             </div>
             <div class="arch-item">
@@ -576,8 +851,11 @@
                     <i class="fas fa-network-wired"></i>
                 </div>
                 <div>
-                    <h3>Réseau Docker</h3>
-                    <p>Communication sécurisée entre les conteneurs via le réseau interne Docker</p>
+                    <h3 data-en="Docker Network" data-fr="Réseau Docker">Docker Network</h3>
+                    <p data-en="Secure communication between containers via Docker internal network"
+                       data-fr="Communication sécurisée entre les conteneurs via le réseau interne Docker">
+                        Secure communication between containers via Docker internal network
+                    </p>
                 </div>
             </div>
             <div class="arch-item">
@@ -585,8 +863,11 @@
                     <i class="fas fa-database"></i>
                 </div>
                 <div>
-                    <h3>Bases de Données</h3>
-                    <p>MariaDb (SQL) et Phpmyadmin dans des conteneurs dédiés pour chaque application</p>
+                    <h3 data-en="Databases" data-fr="Bases de Données">Databases</h3>
+                    <p data-en="MariaDB (SQL) and PhpMyAdmin in dedicated containers for each application"
+                       data-fr="MariaDb (SQL) et Phpmyadmin dans des conteneurs dédiés pour chaque application">
+                        MariaDB (SQL) and PhpMyAdmin in dedicated containers for each application
+                    </p>
                 </div>
             </div>
         </div>
@@ -594,39 +875,46 @@
 </section>
 
 <!-- Stats -->
-<section class="stats" id="stats">
+<section id="stats" class="stats section-secondary">
     <div class="container">
         <div class="section-title">
-            <h2>En Chiffres</h2>
-            <p>Performances et disponibilité de l'infrastructure</p>
+            <h2 data-en="In Numbers" data-fr="En Chiffres">In Numbers</h2>
+            <p data-en="Infrastructure performance and availability" data-fr="Performances et disponibilité de l'infrastructure">
+                Infrastructure performance and availability
+            </p>
         </div>
         <div class="stats-grid">
             <div class="stat-item">
-                <h3>9</h3>
-                <p>Applications déployées</p>
+                <h3>10</h3>
+                <p data-en="Deployed Applications" data-fr="Applications déployées">Deployed Applications</p>
             </div>
             <div class="stat-item">
-                <h3>5</h3>
-                <p>Langages différents</p>
+                <h3>6</h3>
+                <p data-en="Different Languages" data-fr="Langages différents">Different Languages</p>
             </div>
             <div class="stat-item">
                 <h3>99.9%</h3>
-                <p>Uptime garanti</p>
+                <p data-en="Guaranteed Uptime" data-fr="Uptime garanti">Guaranteed Uptime</p>
             </div>
             <div class="stat-item">
                 <h3>&lt;100ms</h3>
-                <p>Temps de réponse moyen</p>
+                <p data-en="Average Response Time" data-fr="Temps de réponse moyen">Average Response Time</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- CTA -->
-<section class="cta" id="contact">
+<section id="contact" class="cta section-dark">
     <div class="container">
-        <h2>Intéressé par cette architecture ?</h2>
-        <p>Je peux vous aider à déployer votre propre infrastructure multisite avec Docker et Caddy</p>
-        <a href="mailto:dj.khireddine@gmail.com" class="cta-button">Me Contacter</a>
+        <h2 data-en="Interested in this architecture?" data-fr="Intéressé par cette architecture ?">
+            Interested in this architecture?
+        </h2>
+        <p data-en="I can help you deploy your own multisite infrastructure with Docker and Caddy"
+           data-fr="Je peux vous aider à déployer votre propre infrastructure multisite avec Docker et Caddy">
+            I can help you deploy your own multisite infrastructure with Docker and Caddy
+        </p>
+        <a href="mailto:dj.khireddine@gmail.com" class="cta-button" data-en="Contact Me" data-fr="Me Contacter">Contact Me</a>
     </div>
 </section>
 
@@ -636,7 +924,10 @@
         <div class="footer-content">
             <div class="footer-column">
                 <h4>DKDEV</h4>
-                <p>Infrastructure Docker multisite avec reverse proxy Caddy.</p>
+                <p data-en="Docker multisite infrastructure with Caddy reverse proxy."
+                   data-fr="Infrastructure Docker multisite avec reverse proxy Caddy.">
+                    Docker multisite infrastructure with Caddy reverse proxy.
+                </p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-github"></i></a>
                     <a href="#"><i class="fab fa-docker"></i></a>
@@ -645,7 +936,7 @@
                 </div>
             </div>
             <div class="footer-column">
-                <h4>Projets</h4>
+                <h4 data-en="Projects" data-fr="Projets">Projects</h4>
                 <ul class="footer-links">
                     <li><a data-subdomain="laravel" target="_blank">Laravel</a></li>
                     <li><a data-subdomain="symfony" target="_blank">Symfony</a></li>
@@ -653,12 +944,12 @@
                     <li><a data-subdomain="go" target="_blank">Go Project</a></li>
                     <li><a data-subdomain="node" target="_blank">Node.js API</a></li>
                     <li><a data-subdomain="php" target="_blank">PHP Project</a></li>
-                    <li><a data-subdomain="html" target="_blank">HTML Statique</a></li>
+                    <li><a data-subdomain="html" target="_blank">Static HTML</a></li>
                     <li><a data-subdomain="phpmyadmin" target="_blank">phpMyAdmin</a></li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Technologies</h4>
+                <h4 data-en="Technologies" data-fr="Technologies">Technologies</h4>
                 <ul class="footer-links">
                     <li><a href="https://docker.com">Docker</a></li>
                     <li><a href="https://caddyserver.com/">Caddy Server</a></li>
@@ -666,16 +957,46 @@
                     <li><a href="https://go.dev/">Golang</a></li>
                     <li><a href="https://www.php.net/">PHP</a></li>
                     <li><a href="https://nodejs.org/">Node.js</a></li>
+                    <li><a href="https://spring.io/">Java Spring</a></li>
                 </ul>
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2025 DKDEV - Infrastructure Multisite. Tous droits réservés.</p>
+            <p>&copy; 2025 DKDEV - Multisite Infrastructure. <span data-en="All rights reserved." data-fr="Tous droits réservés.">All rights reserved.</span></p>
         </div>
     </div>
 </footer>
 
 <script>
+    // Language management
+    let currentLanguage = 'en';
+
+    function toggleLanguage() {
+        currentLanguage = currentLanguage === 'en' ? 'fr' : 'en';
+        updateLanguage();
+    }
+
+    function updateLanguage() {
+        // Update all elements with data attributes
+        document.querySelectorAll('[data-en]').forEach(element => {
+            const text = element.getAttribute(`data-${currentLanguage}`);
+            if (text) {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = text;
+                } else {
+                    element.textContent = text;
+                }
+            }
+        });
+
+        // Update language button
+        const langBtn = document.querySelector('.lang-text');
+        langBtn.textContent = currentLanguage === 'en' ? 'FR' : 'EN';
+
+        // Update HTML lang attribute
+        document.documentElement.lang = currentLanguage;
+    }
+
     // === Script Dynamique des liens ===
     (function() {
         // Récupère le domaine depuis env.js si présent, sinon depuis l'URL
@@ -741,6 +1062,9 @@
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
+
+        // Initialize language
+        updateLanguage();
     });
 
     // Gestion du chargement des images pour éviter les sauts de layout
