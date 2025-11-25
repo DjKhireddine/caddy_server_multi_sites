@@ -6,13 +6,16 @@ services:
     command: ["/app/bin/app"]
     environment:
       PORT: ${GO_INTERNAL_PORT}
+      DB_HOST: ${DB_HOST}
     volumes:
       - ../../sites/GO/gin:/app:ro
     networks:
-      app_network:
-        aliases: ["go"]
+      - app_network
+      - db_network
     restart: unless-stopped
 
 networks:
   app_network:
+    external: true
+  db_network:
     external: true
