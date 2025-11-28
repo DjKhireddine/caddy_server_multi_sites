@@ -38,7 +38,20 @@ func Init() (*sql.DB, error) {
 }
 
 func createTables(db *sql.DB) error {
-	query := `
+	createUsersTable := `
+        CREATE TABLE IF NOT EXISTS users(
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            email VARCHAR(255) NOT NULL UNIQUE,
+            password_hash VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `
+
+	if _, err := db.Exec(createUsersTable); err != nil {
+		return fmt.Errorf("failed to create users table: %w", err)
+	}
+
+	createEventsTable := `
         CREATE TABLE IF NOT EXISTS events(
             id INT PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR(255) NOT NULL,
@@ -46,8 +59,14 @@ func createTables(db *sql.DB) error {
             location VARCHAR(255) NOT NULL,
             date_time DATETIME NOT NULL,
             user_id INT,
+            FOREIGN KEY (user_id) REFERENCES users(id),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`
-	_, err := db.Exec(query)
-	return err
+        );
+    `
+
+	if _, err := db.Exec(createEventsTable); err != nil {
+		return fmt.Errorf("failed to create events table: %w", err)
+	}
+
+	return nil
 }

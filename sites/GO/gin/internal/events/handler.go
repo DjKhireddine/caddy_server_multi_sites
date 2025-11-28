@@ -15,15 +15,12 @@ func NewHandler(s Service) *Handler {
 	return &Handler{svc: s}
 }
 
-func (h *Handler) RegisterRoutes(r *gin.Engine) {
-	events := r.Group("/events")
-	{
-		events.GET("", h.list)
-		events.POST("", h.create)
-		events.GET("/:id", h.get)
-		events.PUT("/:id", h.update)
-		events.DELETE("/:id", h.delete)
-	}
+func (h *Handler) RegisterRoutes(r *gin.RouterGroup) {
+	r.GET("", h.list)
+	r.POST("", h.create)
+	r.GET("/:id", h.get)
+	r.PUT("/:id", h.update)
+	r.DELETE("/:id", h.delete)
 }
 
 func (h *Handler) list(c *gin.Context) {
