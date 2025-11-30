@@ -1,0 +1,52 @@
+server:
+  address: "tcp://0.0.0.0:9091/"
+
+log:
+  level: info
+
+theme: auto
+
+# Authentication backend: file (simple, required)
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+
+# Second factor (TOTP) - adjust issuer to your domain
+totp:
+  issuer: domozone.local
+
+# Session: cookies (required) + redis store
+session:
+  cookies:
+    - name: authelia_session
+      domain: domozone.local
+      authelia_url: "https://auth.domozone.local"
+
+  redis:
+    host: redis
+    port: 6379
+    database_index: 0
+
+# Storage: ONLY ONE backend. Use local sqlite for dev.
+storage:
+  mysql:
+    address: 'tcp://db:3306'
+    database: 'authelia'
+    username: 'user'
+    password: 'password'
+# Notifier: choose one. Filesystem is simplest for dev.
+notifier:
+  smtp:
+    address: sandbox.smtp.mailtrap.io:465
+    sender: "Authelia <authelia@domozone.local>"
+    username: 847c6499fe61a8
+# Access control: choose default (two_factor or one_factor) and explicit rules
+access_control:
+  default_policy: two_factor
+  rules:
+    - domain: "go.domozone.local"
+      policy: one_factor
+    - domain: "django.domozone.local"
+      policy: one_factor
+    - domain: "laravel.domozone.local"
+      policy: one_factor
