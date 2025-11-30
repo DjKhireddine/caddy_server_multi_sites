@@ -23,6 +23,10 @@ Thumbs.db
 
 # ========== DEPENDENCIES ==========
 
+# authelia
+services/authelia/config/configuration.yml
+services/authelia/redis/*
+
 # PHP (Laravel/Symfony)
 sites/PHP/laravel
 sites/PHP/symfony

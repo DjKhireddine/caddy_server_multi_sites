@@ -11,17 +11,6 @@ authentication_backend:
   file:
     path: /config/users_database.yml
 
-# Second factor (TOTP) - adjust issuer to your domain
-totp:
-  issuer: domozone.local
-
-# Session: cookies (required) + redis store
-session:
-  cookies:
-    - name: authelia_session
-      domain: domozone.local
-      authelia_url: "https://auth.domozone.local"
-
   redis:
     host: redis
     port: 6379

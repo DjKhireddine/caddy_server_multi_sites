@@ -9,6 +9,7 @@ DOCKER_COMPOSE_GO = docker compose --env-file .env -f services/go/docker-compose
 DOCKER_COMPOSE_PYTHON = docker compose --env-file .env -f services/python/docker-compose.yml
 DOCKER_COMPOSE_NODE = docker compose --env-file .env -f services/node/docker-compose.yml
 DOCKER_COMPOSE_DATABASE = docker compose --env-file .env -f services/database/docker-compose.yml
+DOCKER_COMPOSE_AUTH = docker compose --env-file .env -f services/authelia/docker-compose.yml
 
 # Couleurs
 RED=\033[0;31m
@@ -57,10 +58,10 @@ init:
 	$(PRINT) "$(GREEN)✅ Environnement initialisé$(NC)\n"
 	$(PRINT) "$(YELLOW)N'oubliez pas de configurer votre fichier .env$(NC)\n\n"
 
-start: ensure-networks start-db start-php  start-go start-django start-node start-caddy
+start: ensure-networks start-db start-php  start-go start-django start-node start-auth start-caddy
 	$(PRINT) "$(GREEN)✅ Tous les services sont démarrés$(NC)\n\n"
 
-stop: stop-caddy stop-php stop-db stop-go stop-django stop-node
+stop: stop-caddy stop-php stop-db stop-go stop-django stop-node stop-auth
 	$(PRINT) "$(YELLOW)🛑 Tous les services sont arrêtés$(NC)\n\n"
 
 restart: stop start
@@ -80,6 +81,8 @@ status:
 	$(DOCKER_COMPOSE_NODE) ps 2>/dev/null || echo "Non démarré"
 	$(PRINT) "\n$(YELLOW)Node:$(NC)\n"
 	$(DOCKER_COMPOSE_PYTHON) ps 2>/dev/null || echo "Non démarré"
+	$(PRINT) "\n$(YELLOW)Authelia:$(NC)\n"
+	$(DOCKER_COMPOSE_AUTH) ps 2>/dev/null || echo "Non démarré"
 	$(PRINT) "\n"
 
 start-caddy: ensure-networks
@@ -138,6 +141,15 @@ start-node:
 	fi
 	$(PRINT) "\n"
 
+start-auth:
+	$(PRINT) "$(GREEN)Démarrage du service Authelia SSO...$(NC)\n"
+	$(DOCKER_COMPOSE_AUTH) up -d
+	$(PRINT) "$(GREEN)✅ Service Authelia démarré$(NC)\n"
+	@if [ -f .env ]; then \
+		. .env; echo "Disponible sur: $$SUBDOMAIN_AUTH.$$DOMAIN"; \
+	fi
+	$(PRINT) "\n"
+
 
 start-db: ensure-networks
 	$(PRINT) "$(GREEN)Démarrage de la base de données...$(NC)\n"
@@ -171,6 +183,10 @@ stop-node:
 	$(PRINT) "$(YELLOW)Arrêt du service Node...$(NC)\n"
 	$(DOCKER_COMPOSE_NODE) down
 
+stop-auth:
+	$(PRINT) "$(YELLOW)Arrêt du service Authelia...$(NC)\n"
+	$(DOCKER_COMPOSE_AUTH) down
+
 stop-db:
 	$(PRINT) "$(YELLOW)Arrêt de la base de données...$(NC)\n"
 	$(DOCKER_COMPOSE_DATABASE) down
@@ -183,6 +199,7 @@ clean:
 	-$(DOCKER_COMPOSE_PYTHON) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_DJANGO) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_NODE) down -v --remove-orphans 2>/dev/null
+	-$(DOCKER_COMPOSE_AUTH) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_DATABASE) down -v --remove-orphans 2>/dev/null
 	$(PRINT) "$(GREEN)✅ Nettoyage terminé$(NC)\n\n"
 
@@ -194,6 +211,7 @@ rebuild: clean
 	$(DOCKER_COMPOSE_PYTHON) build --no-cache
 	$(DOCKER_COMPOSE_DJANGO) build --no-cache
 	$(DOCKER_COMPOSE_NODE) build --no-cache
+	$(DOCKER_COMPOSE_AUTH) build --no-cache
 	$(DOCKER_COMPOSE_DATABASE) build --no-cache
 	$(MAKE) start
 	$(PRINT) "$(GREEN)✅ Rebuild terminé$(NC)\n\n"
@@ -212,6 +230,9 @@ logs-django:
 
 logs-node:
 	$(DOCKER_COMPOSE_NODE) logs -f
+
+logs-auth:
+	$(DOCKER_COMPOSE_AUTH) logs -f
 
 logs-db:
 	$(DOCKER_COMPOSE_DATABASE) logs -f

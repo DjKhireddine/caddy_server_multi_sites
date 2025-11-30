@@ -45,39 +45,6 @@ services:
       - app_network
     restart: unless-stopped
 
-  authelia:
-    image: authelia/authelia:latest
-    container_name: authelia
-    restart: unless-stopped
-    depends_on:
-      - redis
-    volumes:
-      # Montage en lecture seule pour la sécurité
-      - ./authelia/config:/config
-    environment:
-      # Secrets (gérés par des fichiers dans ./authelia/config/secrets)
-      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: /config/secrets/JWT_SECRET
-      AUTHELIA_SESSION_SECRET_FILE: /config/secrets/SESSION_SECRET
-      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /config/secrets/SMTP_PASSWORD
-      AUTHELIA_SESSION_REDIS_PASSWORD_FILE: /config/secrets/REDIS_PASSWORD
-
-      # Configuration du stockage (MariaDB/MySQL)
-      #AUTHELIA_STORAGE_MYSQL_PASSWORD_FILE: /config/secrets/STORAGE_PASSWORD
-      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /config/secrets/STORAGE_ENCRYPTION_KEY
-    networks: # Doit être dans le même réseau que Caddy et Redis
-      - app_network
-      - db_network # Si votre base de données est sur un réseau séparé
-
-  redis:
-    image: redis:7
-    container_name: redis
-    restart: unless-stopped
-    command: "redis-server --save 60 1 --loglevel warning --requirepass BtMduRfhPF20VRJ4kFWddPOMkZgTzceffSCEbYSpdjgdUQWMeSaXmZMASuUXfM50"
-    volumes:
-      - ./redis:/data
-    networks:
-      - app_network
-
 networks:
   app_network:
     external: true

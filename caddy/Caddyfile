@@ -17,7 +17,7 @@ www.{$DOMAIN} {
 }
 
 # ===== SSO Authelia =====
-auth.{$DOMAIN} {
+{$SUBDOMAIN_AUTH}.{$DOMAIN} {
   reverse_proxy authelia:9091
 }
 
