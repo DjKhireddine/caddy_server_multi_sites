@@ -136,13 +136,20 @@
 
         .method {
             display: inline-block;
-            background: #28a745;
             color: white;
             padding: 5px 15px;
             border-radius: 4px;
             font-weight: bold;
             margin-right: 10px;
             text-decoration: none;
+        }
+
+        .success {
+            background: #28a745;
+        }
+
+        .warning {
+            background: #f86d00;
         }
 
         .path {
@@ -154,6 +161,84 @@
         .description {
             color: #6c757d;
             margin-top: 10px;
+        }
+
+        /* Styles pour le collapsible */
+        .payload-collapsible {
+            margin-top: 15px;
+            background: #f1f8ff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .payload-collapsible input[type="checkbox"] {
+            display: none;
+        }
+
+        .payload-header {
+            background: #00ADD8;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .payload-header::after {
+            content: "▼";
+            font-size: 0.8em;
+            transition: transform 0.3s ease;
+        }
+
+        .payload-collapsible input[type="checkbox"]:checked + .payload-header::after {
+            transform: rotate(180deg);
+        }
+
+        .payload-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #f8fafc;
+        }
+
+        .payload-collapsible input[type="checkbox"]:checked ~ .payload-content {
+            max-height: 300px;
+            padding: 15px;
+        }
+
+        .payload-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .payload-example .key {
+            color: #60a5fa;
+        }
+
+        .payload-example .string {
+            color: #fbbf24;
+        }
+
+        .payload-example .number {
+            color: #34d399;
+        }
+
+        .payload-note {
+            font-size: 0.85em;
+            color: #64748b;
+            margin-top: 10px;
+            font-style: italic;
         }
 
         .footer {
@@ -207,18 +292,53 @@
     <div class="endpoints">
         <h3>📡 Endpoints disponibles</h3>
         <div class="endpoint">
-            <a href="/health" class="method">GET</a>
+            <a href="/health" class="method success">GET</a>
             <span class="path">/health</span>
             <div class="description">
                 📊 Vérifie le statut de l'API et les métriques de performance
             </div>
         </div>
         <div class="endpoint">
-            <a href="/api/hello" class="method">GET</a>
-            <span class="path">/api/hello</span>
+            <a href="/api/events" class="method success">GET</a>
+            <span class="path">🔐 /api/events</span>
             <div class="description">
-                👋 Message de bienvenue de l'API Go
+                route protected with sso authentication
             </div>
+        </div>
+        <div class="endpoint">
+            <a href="/api/events/1" class="method success">GET</a>
+            <span class="path">🔐 /api/events/:id</span>
+            <div class="description">
+                Get all events
+            </div>
+        </div>
+        <div class="endpoint">
+            <a href="#" class="method warning">POST</a>
+            <span class="path">🔐 /api/events</span>
+            <div class="description">
+                <p>Create a new event</p>
+                <p>Should use the cookie named `authelia_session`</p>
+
+                <!-- Ajoutez cette section -->
+                <div class="payload-collapsible">
+                    <input type="checkbox" id="payload-toggle">
+                    <label for="payload-toggle" class="payload-header">
+                        Exemple de payload JSON
+                    </label>
+                    <div class="payload-content">
+                <pre class="payload-example">{
+    <span class="key">"name"</span>: <span class="string">"event3"</span>,
+    <span class="key">"description"</span>: <span class="string">"description of Third event"</span>,
+    <span class="key">"location"</span>: <span class="string">"London"</span>,
+    <span class="key">"dateTime"</span>: <span class="string">"2026-05-10T10:00:00Z"</span>
+}</pre>
+                        <p class="payload-note">⚠️ Tous les champs sont requis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            🔐 : route protected with sso authentication
         </div>
     </div>
 

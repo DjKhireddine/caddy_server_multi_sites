@@ -2,7 +2,6 @@ package http
 
 import (
 	"database/sql"
-	"dkdev/httpserver/internal/auth"
 	"fmt"
 	"net/http"
 	"os"
@@ -34,14 +33,12 @@ func NewRouter(db *sql.DB) *gin.Engine {
 	})
 
 	// === ROUTES ===
-	// add "api" prefix to routes
-	r.Group("/api")
 
-	// === USERS / AUTH ===
+	// === USERS ===
 	userRepo := users.NewRepository(db)
 	userSvc := users.NewService(userRepo)
 	userHandler := users.NewHandler(userSvc)
-	usersGroup := r.Group("/api/auth")
+	usersGroup := r.Group("/users")
 	userHandler.RegisterRoutes(usersGroup)
 
 	// === EVENTS ===
@@ -49,10 +46,7 @@ func NewRouter(db *sql.DB) *gin.Engine {
 	eventsSvc := events.NewService(eventsRepo)
 	eventsHandler := events.NewHandler(eventsSvc)
 	eventsGroup := r.Group("/api/events")
-	eventsGroup.Use(auth.AuthMiddleware())
-	{
-		eventsHandler.RegisterRoutes(eventsGroup)
-	}
+	eventsHandler.RegisterRoutes(eventsGroup)
 
 	for _, route := range r.Routes() {
 		fmt.Printf("%s\t%s\t%s\n", route.Method, route.Path, route.Handler)
