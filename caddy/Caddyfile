@@ -1,3 +1,11 @@
+(logs) {
+    log {
+        output stdout
+        format json
+    }
+}
+
+
 # Snippet commun PHP (FPM)
 (php_stack) {
         php_fastcgi php:{$PHP_INTERNAL_PORT}
@@ -14,45 +22,53 @@
 
 # ===== Racine du domaine : LANDING à la racine =====
 {$DOMAIN} {
+        import logs
         root * {$LANDING_ROOT}
         import php_stack
 }
 
 # Optionnel : www.domaine
 www.{$DOMAIN} {
+        import logs
         root * {$LANDING_ROOT}
         import php_stack
 }
 
 # ===== SSO Authelia =====
 {$SUBDOMAIN_AUTH}.{$DOMAIN} {
-  reverse_proxy authelia:9091
+        import logs
+        reverse_proxy authelia:9091
 }
 
 # ===== Sous-domaines PHP =====
 {$SUBDOMAIN_HTML}.{$DOMAIN} {
+        import logs
         root * {$HTML_ROOT}
         import php_stack
 }
 
 {$SUBDOMAIN_PHP}.{$DOMAIN} {
+        import logs
         root * {$PHP_SIMPLE_ROOT}
         import php_stack
 }
 
 {$SUBDOMAIN_LARAVEL}.{$DOMAIN} {
+        import logs
         root * {$LARAVEL_ROOT}
         import php_stack
         import sso_auth_forward
 }
 
 {$SUBDOMAIN_SYMFONY}.{$DOMAIN} {
+        import logs
         root * {$SYMFONY_ROOT}
         import php_stack
         import sso_auth_forward
 }
 
 {$SUBDOMAIN_WORDPRESS}.{$DOMAIN} {
+        import logs
         root * {$WORDPRESS_ROOT}
         import php_stack
         import sso_auth_forward
@@ -60,21 +76,25 @@ www.{$DOMAIN} {
 
 # ===== Services externes =====
 {$SUBDOMAIN_PHPMYADMIN}.{$DOMAIN} {
+        import logs
         reverse_proxy phpmyadmin:80
 }
 
 {$SUBDOMAIN_GO}.{$DOMAIN} {
-    reverse_proxy go:{$GO_INTERNAL_PORT}
-    import sso_auth_forward
+        import logs
+        reverse_proxy go:{$GO_INTERNAL_PORT}
+        import sso_auth_forward
 }
 
 {$SUBDOMAIN_DJANGO}.{$DOMAIN} {
-    reverse_proxy django:{$DJANGO_INTERNAL_PORT}
-    import sso_auth_forward
+        import logs
+        reverse_proxy django:{$DJANGO_INTERNAL_PORT}
+        import sso_auth_forward
 }
 
 
 {$SUBDOMAIN_NODE}.{$DOMAIN} {
-    reverse_proxy node:{$NODE_INTERNAL_PORT}
-    import sso_auth_forward
+        import logs
+        reverse_proxy node:{$NODE_INTERNAL_PORT}
+        import sso_auth_forward
 }
