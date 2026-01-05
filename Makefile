@@ -8,6 +8,7 @@ DOCKER_COMPOSE_PHP = docker compose --env-file .env -f services/php/docker-compo
 DOCKER_COMPOSE_GO = docker compose --env-file .env -f services/go/docker-compose.yml
 DOCKER_COMPOSE_PYTHON = docker compose --env-file .env -f services/python/docker-compose.yml
 DOCKER_COMPOSE_NODE = docker compose --env-file .env -f services/node/docker-compose.yml
+DOCKER_COMPOSE_MONITOR = docker compose --env-file .env -f services/monitoring/docker-compose.yml
 DOCKER_COMPOSE_DATABASE = docker compose --env-file .env -f services/database/docker-compose.yml
 DOCKER_COMPOSE_AUTH = docker compose --env-file .env -f services/authelia/docker-compose.yml
 
@@ -37,10 +38,12 @@ help:
 	$(PRINT) "  make start-php    - Démarre PHP\n"
 	$(PRINT) "  make start-go     - Démarre le service Go\n"
 	$(PRINT) "  make start-django - Démarre le service Django\n"
+	$(PRINT) "  make start-monitor - Démarre les services (Prometheus, Grafana and cAdvisor)\n"
 	$(PRINT) "  make start-db     - Démarre la base de données\n"
 	$(PRINT) "\n$(YELLOW)Arrêt individuel:$(NC)\n"
 	$(PRINT) "  make stop-go      - Arrête le service Go\n"
 	$(PRINT) "  make stop-django  - Arrête le service Django\n"
+	$(PRINT) "  make stop-monitor - Démarre les services (Prometheus, Grafana and cAdvisor)\n"
 	$(PRINT) "  make stop-db      - Arrête la base de données\n"
 	$(PRINT) "\n$(YELLOW)Maintenance:$(NC)\n"
 	$(PRINT) "  make clean        - Nettoie tout (containers, volumes, networks)\n"
@@ -58,10 +61,10 @@ init:
 	$(PRINT) "$(GREEN)✅ Environnement initialisé$(NC)\n"
 	$(PRINT) "$(YELLOW)N'oubliez pas de configurer votre fichier .env$(NC)\n\n"
 
-start: ensure-networks start-db start-php  start-go start-django start-node start-auth start-caddy
+start: ensure-networks start-db start-php  start-go start-django start-node start-monitor start-auth start-caddy
 	$(PRINT) "$(GREEN)✅ Tous les services sont démarrés$(NC)\n\n"
 
-stop: stop-caddy stop-php stop-db stop-go stop-django stop-node stop-auth
+stop: stop-caddy stop-php stop-db stop-go stop-django stop-node stop-monitor stop-auth
 	$(PRINT) "$(YELLOW)🛑 Tous les services sont arrêtés$(NC)\n\n"
 
 restart: stop start
@@ -141,6 +144,15 @@ start-node:
 	fi
 	$(PRINT) "\n"
 
+start-monitor:
+	$(PRINT) "$(GREEN)Démarrage des services (Prometheus, Grafana and cAdvisor)...$(NC)\n"
+	$(DOCKER_COMPOSE_MONITOR) up -d
+	$(PRINT) "$(GREEN)✅ Services Monitoring démarrés$(NC)\n"
+	@if [ -f .env ]; then \
+		. .env; echo "Disponible sur: $$SUBDOMAIN_MONITOR.$$DOMAIN"; \
+	fi
+	$(PRINT) "\n"
+
 start-auth:
 	$(PRINT) "$(GREEN)Démarrage du service Authelia SSO...$(NC)\n"
 	$(DOCKER_COMPOSE_AUTH) up -d
@@ -183,6 +195,10 @@ stop-node:
 	$(PRINT) "$(YELLOW)Arrêt du service Node...$(NC)\n"
 	$(DOCKER_COMPOSE_NODE) down
 
+stop-monitor:
+	$(PRINT) "$(YELLOW)Arrêt des services (Prometheus, Grafana and cAdvisor)...$(NC)\n"
+	$(DOCKER_COMPOSE_MONITOR) down
+
 stop-auth:
 	$(PRINT) "$(YELLOW)Arrêt du service Authelia...$(NC)\n"
 	$(DOCKER_COMPOSE_AUTH) down
@@ -199,6 +215,7 @@ clean:
 	-$(DOCKER_COMPOSE_PYTHON) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_DJANGO) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_NODE) down -v --remove-orphans 2>/dev/null
+	-$(DOCKER_COMPOSE_MONITOR) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_AUTH) down -v --remove-orphans 2>/dev/null
 	-$(DOCKER_COMPOSE_DATABASE) down -v --remove-orphans 2>/dev/null
 	$(PRINT) "$(GREEN)✅ Nettoyage terminé$(NC)\n\n"
@@ -211,6 +228,7 @@ rebuild: clean
 	$(DOCKER_COMPOSE_PYTHON) build --no-cache
 	$(DOCKER_COMPOSE_DJANGO) build --no-cache
 	$(DOCKER_COMPOSE_NODE) build --no-cache
+	$(DOCKER_COMPOSE_MONITOR) build --no-cache
 	$(DOCKER_COMPOSE_AUTH) build --no-cache
 	$(DOCKER_COMPOSE_DATABASE) build --no-cache
 	$(MAKE) start
@@ -230,6 +248,9 @@ logs-django:
 
 logs-node:
 	$(DOCKER_COMPOSE_NODE) logs -f
+
+logs-monitor:
+	$(DOCKER_COMPOSE_MONITOR) logs -f
 
 logs-auth:
 	$(DOCKER_COMPOSE_AUTH) logs -f
