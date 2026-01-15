@@ -6,6 +6,8 @@
 caddy_data/
 caddy_config/
 db_data/
+services/monitoring/data/grafana_data/*
+services/monitoring/data/prometheus_data/*
 
 # Logs
 *.log
