@@ -8,7 +8,7 @@ caddy_config/
 db_data/
 services/monitoring/data/grafana_data/*
 services/monitoring/data/prometheus_data/*
-
+sites/GO/gin/bin/*
 # Logs
 *.log
 logs/
