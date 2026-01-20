@@ -12,7 +12,7 @@ services:
       - ./db_data:/var/lib/mysql
     networks:
       - db_network
-    restart: unless-stopped
+    restart: no
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

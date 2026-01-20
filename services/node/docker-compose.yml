@@ -20,7 +20,7 @@ services:
     networks:
       app_network:
         aliases: ["node"]
-    restart: unless-stopped
+    restart: no
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:${NODE_INTERNAL_PORT}/health || exit 1"]
       interval: 10s

@@ -7,7 +7,7 @@ services:
       - ./data/prometheus_data:/prometheus
     networks:
       - app_network
-    restart: unless-stopped
+    restart: no
 
   grafana:
     image: grafana/grafana:latest
@@ -18,7 +18,7 @@ services:
       - ./data/grafana_data:/var/lib/grafana
     networks:
       - app_network
-    restart: unless-stopped
+    restart: no
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -34,7 +34,7 @@ services:
       - /dev/disk/:/dev/disk:ro
     networks:
       - app_network
-    restart: unless-stopped
+    restart: no
 
 networks:
   app_network:
