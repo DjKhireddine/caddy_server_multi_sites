@@ -16,7 +16,24 @@ func Init() (*sql.DB, error) {
 		dbHost = "172.19.0.2:3306"
 	}
 
-	dsn := "user:password@tcp(" + dbHost + ")/go-gin?parseTime=true"
+	dbUser := os.Getenv("DB_USER")
+	if dbUser == "" {
+		dbUser = "user" // Valeur par défaut
+	}
+
+	dbPassword := os.Getenv("DB_PASSWORD")
+	if dbPassword == "" {
+		dbPassword = "password" // Valeur par défaut
+	}
+
+	dbName := os.Getenv("DB_NAME")
+	if dbName == "" {
+		dbName = "go-gin"
+	}
+
+	// Construire le DSN avec les variables
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true",
+		dbUser, dbPassword, dbHost, dbName)
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
