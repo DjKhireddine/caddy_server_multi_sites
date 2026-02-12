@@ -1006,6 +1006,7 @@
             'localhost';
 
         console.log('🌐 Domaine détecté :', baseDomain);
+        console.log(555)
 
         // Met à jour tous les liens dynamiques
         document.querySelectorAll('[data-subdomain]').forEach(link => {
@@ -1013,6 +1014,9 @@
             // Utilise HTTP pour localhost, HTTPS pour les autres domaines
             const protocol = baseDomain === 'localhost' ? 'http' : 'https';
             link.href = `${protocol}://${sub}.${baseDomain}`;
+            if (sub === 'monitor') {
+                link.href += 'd/pMEd7m0Mz/cadvisor-exporter'
+            }
 
             // Met à jour aussi le texte si l'élément a un span pour l'URL
             const urlSpan = link.querySelector('.project-url');
