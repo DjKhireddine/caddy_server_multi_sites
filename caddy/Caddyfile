@@ -61,7 +61,6 @@ www.{$DOMAIN} {
         import logs
         root * {$LARAVEL_ROOT}
         import php_stack
-        import sso_auth_forward
 }
 
 {$SUBDOMAIN_SYMFONY}.{$DOMAIN} {
