@@ -81,9 +81,7 @@ sites/PHP/wordpress/wp-content/backups/
 sites/PHP/wordpress/.htaccess
 
 # Laravel
-sites/PHP/laravel/storage/*.key
-sites/PHP/laravel/public/storage
-sites/PHP/laravel/public/hot
+sites/PHP/laravel/
 
 # Symfony
 sites/PHP/symfony/var/
